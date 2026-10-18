@@ -44,7 +44,7 @@
 3. Android 手机如提示“禁止安装未知应用”，在系统设置中允许当前浏览器/文件管理器安装；
 4. 安装后打开「望月 SelenoAtlas」。
 
-> **从旧版升级**：v1.1.0 / v1.2.0 使用新的 `applicationId`（`com.excessiverain.selenoatlas`），属于新应用，不能覆盖安装 v1.0.0。请先卸载旧的「月面三维地名图」，再安装望月 SelenoAtlas。
+> **从旧版升级**：v1.2.0 使用新的 `applicationId`（`com.excessiverain.selenoatlas`），属于新应用，不能覆盖安装 v1.0.0。请先卸载旧的「月面三维地名图」，再安装望月 SelenoAtlas。
 
 v1.2.0 APK：**4,220,215 字节（约 4.2 MB）**  
 SHA-256：`28247bc73be01d0ee973e85c6f90fd858f07fc510eb6db8ebce03d1ae1be2d38`  
