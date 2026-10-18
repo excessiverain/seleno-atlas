@@ -5,6 +5,7 @@
 > 把月球装进 Android 手机的三维地名图集。
 
 [![Build 望月 SelenoAtlas APK & Release](https://github.com/excessiverain/seleno-atlas/actions/workflows/android-release.yml/badge.svg)](https://github.com/excessiverain/seleno-atlas/actions/workflows/android-release.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 **下载 APK**：<https://github.com/excessiverain/seleno-atlas/releases/latest>
 
@@ -143,6 +144,8 @@ git push origin v1.3.2
 - 三维引擎：Three.js r128
 - 交互参考：[嫦娥二号月球地图](https://ce2.greensea.org/)
 
+许可、完整署名与修改说明见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。
+
 独立地名审校报告见 [docs/qa_label_audit.md](docs/qa_label_audit.md)：修正了莫斯科海、界海、南极-艾特肯盆地等 7 处显著坐标错误，并对差异较大的大型地貌采用 IAU LOLA 2011 坐标。
 
 ## English
@@ -158,6 +161,20 @@ git push origin v1.3.2
 - 外链需要在系统浏览器中联网查看，应用本身离线。
 - debug 签名仅适合个人侧载，不适合正式分发。
 
-## License / Attribution
+## License / 许可
 
-本项目是个人学习与科普用途的本地应用。Web 端代码与 Android 壳代码可自由修改使用；**第三方纹理、地名数据与参考站内容遵循其各自来源的许可与署名要求**，详见 [docs/qa_label_audit.md](docs/qa_label_audit.md) 与 Web 应用内“关于”页。若再分发，请保留上述来源署名。
+**Original source code and documentation** © 2026 excessiverain, released under the
+[MIT License](LICENSE). This includes the Android WebView shell, the Web app source,
+build scripts and project documentation.
+
+**Third-party imagery and data are not relicensed by MIT.** Lunar color textures,
+LOLA/GLD100 elevation, IAU/USGS gazetteer data, Chinese translations and mission
+data remain subject to their respective source terms. See
+[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for attribution, license links and
+modification notes.
+
+The SelenoAtlas name, icon and visual identity are not licensed for use as a
+separate product or service identity. This project is not affiliated with NASA,
+IAU, USGS, Solar System Scope or the Chang'e-2 mission team.
+
+---
