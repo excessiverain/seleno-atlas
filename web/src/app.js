@@ -111,6 +111,25 @@
     var z = d > 400 ? 3 : (d > 120 ? 4 : (d > 40 ? 5 : 6));
     return 'https://ce2.greensea.org/#/@' + f.lat.toFixed(6) + ',' + f.lon.toFixed(6) + ',' + z + 'z,' + map;
   }
+  // 低精度月相：以 2000-01-06 的新月为基准，按平均朔望月推算太阳直射经度。
+  // 用于“按当前时间”的真实日照可视化；误差主要来自月球天平动和轨道偏心率，适合展示而非星历级计算。
+  function subsolarPoint(date) {
+    var jd = date.getTime() / 86400000 + 2440587.5;
+    var synodic = 29.530588853;
+    var age = ((jd - 2451550.1) % synodic + synodic) % synodic;
+    var phase = age / synodic;
+    var lon = 180 - phase * 360;
+    lon = ((lon + 540) % 360) - 180;
+    return { lon: lon, lat: 0, phase: phase };
+  }
+
+  function updateSunFromClock() {
+    var p = subsolarPoint(new Date());
+    state.sunLon = p.lon;
+    state.sunLat = p.lat;
+    if (state.lightMode === 'sun') updateLights();
+  }
+
   function kindEn(kind) {
     var m = {
       '载人着陆': 'Manned landing', '软着陆': 'Soft landing', '采样返回': 'Sample return',
@@ -202,6 +221,8 @@
     autoRotate: true,
     grid: false,
     lightMode: 'soft',
+    sunLon: null,
+    sunLat: null,
     layers: { water: true, crater: true, mountain: true, tectonic: true, landing: true },
     selectedId: null,
     tab: 'all',
@@ -1155,8 +1176,8 @@
   function updateLights() {
     if (!keyLight) return;
     if (state.lightMode === 'sun') {
-      var sl = (state.sunLon || -46) * D2R;
-      var sb = (state.sunLat || 16) * D2R;
+      var sl = (state.sunLon == null ? -46 : state.sunLon) * D2R;
+      var sb = (state.sunLat == null ? 16 : state.sunLat) * D2R;
       var cb = Math.cos(sb);
       sunDir = { x: cb * Math.cos(sl), y: Math.sin(sb), z: -cb * Math.sin(sl) };
       sunDirVec.set(sunDir.x, sunDir.y, sunDir.z);
@@ -1863,12 +1884,13 @@
     if (btn) {
       btn.classList.toggle('on', state.lightMode === 'sun');
       btn.title = state.lightMode === 'soft'
-        ? tr('光照：柔光（点击切换为真实日照）', 'Lighting: soft (click for true sunlight)')
-        : tr('光照：真实日照（点击切换为柔光）', 'Lighting: true sunlight (click for soft light)');
+        ? tr('光照：柔光（点击切换为按当前时间计算的真实日照）', 'Lighting: soft (click for real sunlight computed from the current time)')
+        : tr('光照：按当前时间计算的真实日照（点击切换为柔光）', 'Lighting: real sunlight from the current time (click for soft light)');
     }
     var label = $('lightLabel');
     if (label) label.textContent = state.lightMode === 'soft' ? tr('柔光', 'Soft') : tr('日照', 'Sun');
-    updateLights();
+    if (state.lightMode === 'sun') updateSunFromClock();
+    else updateLights();
   }
 
   function onResize() {
@@ -1890,6 +1912,8 @@
     loadTextures();
     setupCanvasEvents();
     bindMinimap();
+    updateSunFromClock();
+    setInterval(updateSunFromClock, 60000);
     requestAnimationFrame(animate);
     window.__LUNAR__ = {
       ready: false,
@@ -1910,6 +1934,15 @@
         renderList();
       },
       setLight: function (mode) { setLightMode(mode); },
+      setLightTime: function (value) {
+        var d = value ? new Date(value) : new Date();
+        if (isNaN(d.getTime())) return null;
+        var p = subsolarPoint(d);
+        state.sunLon = p.lon;
+        state.sunLat = p.lat;
+        updateLights();
+        return { lon: p.lon, lat: p.lat, phase: p.phase };
+      },
       toggleGrid: function () { $('btnGrid').click(); },
       screenshotMode: function () {
         $('loader').classList.add('done');
