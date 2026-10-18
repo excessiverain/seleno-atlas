@@ -6,7 +6,7 @@
 
 > **下载 APK**：<https://github.com/excessiverain/lunar-3d-atlas/releases/latest>
 >
-> 当前版本：**v1.0.0** · Android 8.0+（minSdk 26）· 竖屏 · 约 6–9 MB
+> 当前版本：**v1.0.0** · Android 8.0+（minSdk 26）· 竖屏 · **约 4.2 MB**
 
 ![月面三维地名图](preview.png)
 
@@ -31,6 +31,9 @@
 3. Android 手机可能会提示“禁止安装未知应用”，在系统设置中允许当前浏览器/文件管理器安装；
 4. 安装后打开「月面三维地名图」。
 
+APK 文件大小：**4,214,702 字节（约 4.2 MB）**  
+SHA-256：`c93f088114ffb756748ee7308ce3a0f4ee3b57844868b4e5b7a422d4aa1b578d`（Release 中同时提供 `.sha256` 文件）
+
 > 该 APK 使用 Android 标准 **debug 签名**，仅用于个人侧载。由于 debug 签名在不同构建机/环境下可能不同，跨版本覆盖安装若提示签名冲突，请先卸载旧版再安装。  
 > 如需长期稳定升级，请使用自己的 release keystore 重新签名。
 
@@ -49,7 +52,7 @@
 | WebView | 推荐系统 Chrome/WebView 较新版本（能运行 WebGL） |
 | 内存 | 4 GB RAM 以上建议使用 4K 纹理版；3 GB 及以下设备如有卡顿可自行降级纹理构建 |
 | 屏幕 | 竖屏手机；430×860 已验证，360×800 建议真机确认 |
-| 存储 | APK 约 6–9 MB，安装后约 15–25 MB |
+| 存储 | APK 约 4.2 MB，安装后约 10–15 MB |
 
 ## 从源码构建
 
