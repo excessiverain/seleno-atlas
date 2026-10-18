@@ -8,7 +8,7 @@
 
 **下载 APK**：<https://github.com/excessiverain/seleno-atlas/releases/latest>
 
-当前版本：**v1.2.0** · Android 8.0+（minSdk 26）· 竖屏 · 约 4.2 MB
+当前版本：**v1.2.0** · Android 8.0+（minSdk 26）· 竖屏 · **4,220,215 字节（约 4.2 MB）**
 
 ![望月 SelenoAtlas](preview.png)
 
@@ -46,7 +46,9 @@
 
 > **从旧版升级**：v1.1.0 / v1.2.0 使用新的 `applicationId`（`com.excessiverain.selenoatlas`），属于新应用，不能覆盖安装 v1.0.0。请先卸载旧的「月面三维地名图」，再安装望月 SelenoAtlas。
 
-v1.2.0 的 APK 大小和 SHA-256 以 Release 页面与实际构建产物为准；Release 中同时提供 `.sha256` 文件。
+v1.2.0 APK：**4,220,215 字节（约 4.2 MB）**  
+SHA-256：`28247bc73be01d0ee973e85c6f90fd858f07fc510eb6db8ebce03d1ae1be2d38`  
+Release 中同时提供 `.sha256` 文件；包名 `com.excessiverain.selenoatlas`，应用显示名 **望月 SelenoAtlas**。
 
 > 该 APK 使用 Android **debug 签名**，仅用于个人侧载。由于 debug 签名在不同构建机/环境下可能不同，跨版本覆盖安装若提示签名冲突，请先卸载再安装。  
 > 如需长期稳定升级，请使用自己的 release keystore 重新签名。
@@ -133,6 +135,10 @@ git push origin v1.2.1
 - 交互参考：[嫦娥二号月球地图](https://ce2.greensea.org/)
 
 独立地名审校报告见 [docs/qa_label_audit.md](docs/qa_label_audit.md)：修正了莫斯科海、界海、南极-艾特肯盆地等 7 处显著坐标错误，并对差异较大的大型地貌采用 IAU LOLA 2011 坐标。
+
+## English
+
+**SelenoAtlas (望月)** is an offline Android WebView atlas of lunar place names. It renders a rotatable 3D Moon with 4K LRO color imagery and 4K LOLA elevation, 1,778 IAU-named features and 243 featured labels. The UI is bilingual (Chinese / English), follows the system language on first launch, and can be switched at any time with the **EN / 中** button in the Layers panel. The English mode uses English feature names, type names, mission metadata and descriptions; Chinese names are retained as secondary labels. No internet, storage, location or camera permissions are requested.
 
 ## 已知限制
 
