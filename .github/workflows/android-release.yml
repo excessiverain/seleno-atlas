@@ -1,0 +1,96 @@
+name: Build Android APK & Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: android-release-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build WebView APK
+    runs-on: ubuntu-latest
+    env:
+      APK_NAME: lunar-atlas-${{ github.ref_type == 'tag' && github.ref_name || 'v1.0.0' }}.apk
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install Android platform and accept licenses
+        run: |
+          yes | sdkmanager --licenses >/dev/null 2>&1 || true
+          sdkmanager "platforms;android-34" "build-tools;34.0.0" "platform-tools"
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-version: '8.7'
+
+      - name: Ensure debug keystore
+        run: |
+          mkdir -p "$HOME/.android"
+          if [ ! -f "$HOME/.android/debug.keystore" ]; then
+            keytool -genkeypair -v \
+              -keystore "$HOME/.android/debug.keystore" \
+              -storepass android -alias androiddebugkey -keypass android \
+              -keyalg RSA -keysize 2048 -validity 10000 \
+              -dname "CN=Android Debug,O=Android,C=US"
+          fi
+
+      - name: Build release APK
+        run: |
+          gradle -p android assembleRelease --no-daemon --stacktrace
+
+      - name: Prepare release assets
+        run: |
+          mkdir -p dist
+          cp android/app/build/outputs/apk/release/app-release.apk "dist/${APK_NAME}"
+          cd dist
+          sha256sum "${APK_NAME}" > "${APK_NAME}.sha256"
+          ls -lh
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: lunar-atlas-apk
+          path: dist/*
+          retention-days: 30
+
+      - name: Publish GitHub Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          name: 月面三维地名图 · WebView APK ${{ github.ref_name }}
+          body: |
+            月面三维地名图（Lunar 3D Atlas）的 Android WebView 版本。
+
+            - 完全离线，无需网络权限
+            - 1,778 个 IAU 月球地名，243 个精选标注
+            - 支持搜索、详情、经纬网、真实日照、全月小地图
+            - 适用于 Android 8.0+（minSdk 26）
+
+            **安装**：下载 `lunar-atlas-${{ github.ref_name }}.apk`，在手机上允许安装未知来源应用后安装。
+            该 APK 使用 Android debug 签名，便于本地侧载；如需长期升级请自行替换正式签名。
+          files: |
+            dist/*.apk
+            dist/*.sha256
+          generate_release_notes: true
+          draft: false
+          prerelease: false

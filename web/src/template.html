@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="theme-color" content="#05070c" />
+<title>月面 · 三维地名图 | Lunar 3D Atlas</title>
+<meta name="description" content="可交互的三维月球地图：真实月面纹理、地名标注、月海与环形山检索、嫦娥与阿波罗着陆点、全月小地图。参考嫦娥二号月球地图制作。" />
+<style>
+/*__INLINE_CSS__*/
+</style>
+</head>
+<body>
+<div id="space"></div>
+<canvas id="webgl" aria-label="三维月球模型"></canvas>
+<div class="vignette"></div>
+<div class="grain"></div>
+<div id="labels" aria-hidden="true"></div>
+
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-mark" aria-hidden="true"><span></span></div>
+    <div class="brand-copy">
+      <h1>月面 · 三维地名图</h1>
+      <p>LUNAR 3D ATLAS <i></i> <span id="brandCount">1,778 个地名</span></p>
+    </div>
+  </div>
+
+  <div class="searchwrap" id="searchWrap">
+    <div class="searchbox">
+      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.8"></circle><path d="M16.2 16.2 21 21"></path></svg>
+      <input id="searchInput" type="text" autocomplete="off" spellcheck="false" placeholder="搜索地名：第谷 / 静海 / 阿波罗11号 / Tycho" aria-label="搜索月球地名" />
+      <kbd id="searchKbd">Ctrl K</kbd>
+      <button id="searchClear" class="search-clear" type="button" aria-label="清空搜索" hidden>×</button>
+    </div>
+    <div id="searchResults" class="search-results" role="listbox" hidden></div>
+  </div>
+
+  <div class="top-actions">
+    <button id="btnLayers" class="icon-btn mobile-only" type="button" title="图层与地标">
+      <svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10"></path></svg>
+    </button>
+    <button id="btnHelp" class="icon-btn" type="button" title="操作说明 / 数据来源">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"></circle><path d="M9.8 9.2a2.3 2.3 0 1 1 3.6 1.9c-.9.6-1.4 1.1-1.4 2.2"></path><circle cx="12" cy="16.8" r=".7" fill="currentColor" stroke="none"></circle></svg>
+    </button>
+    <button id="btnFullscreen" class="icon-btn" type="button" title="全屏">
+      <svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"></path></svg>
+    </button>
+  </div>
+</header>
+
+<aside id="leftPanel" class="panel left-panel">
+  <div class="panel-head">
+    <div>
+      <div class="eyebrow">LAYERS</div>
+      <div class="panel-title">图层与地标</div>
+    </div>
+    <button id="btnRandom" class="mini-btn" type="button" title="随机看一个地标">
+      <svg viewBox="0 0 24 24"><path d="M4 7h3c4 0 4 10 8 10h5M17 14l3 3-3 3M4 17h3c1.4 0 2.4-1.2 3.2-2.6M14 8.6C14.8 7.2 15.8 7 17 7h3M17 4l3 3-3 3"></path></svg>
+      <span>随机</span>
+    </button>
+  </div>
+
+  <div id="layerChips" class="layer-chips"></div>
+
+  <div class="list-head">
+    <span>精选地名</span>
+    <span id="listCount" class="list-count">243</span>
+  </div>
+  <div id="listTabs" class="tabs">
+    <button class="tab on" data-tab="all" type="button">全部</button>
+    <button class="tab" data-tab="water" type="button">月海</button>
+    <button class="tab" data-tab="crater" type="button">环形山</button>
+    <button class="tab" data-tab="mountain" type="button">山脉</button>
+    <button class="tab" data-tab="tectonic" type="button">谷裂</button>
+    <button class="tab" data-tab="landing" type="button">探测点</button>
+  </div>
+  <div id="featureList" class="feature-list"></div>
+
+  <div class="panel-foot">
+    <span>指针坐标</span>
+    <span id="coordReadout">—</span>
+  </div>
+</aside>
+
+<aside id="infoPanel" class="panel info-panel">
+  <div class="info-top">
+    <div class="eyebrow">FEATURE</div>
+    <button id="infoClose" class="close-btn" type="button" title="关闭详情" hidden>×</button>
+  </div>
+  <div id="infoBody" class="info-body"></div>
+</aside>
+
+<div class="minimap-wrap panel" id="minimapWrap">
+  <div class="mini-head">
+    <span>全月图 <b>2D</b></span>
+    <span class="mini-hint">点击定位</span>
+  </div>
+  <canvas id="minimap" width="520" height="260" aria-label="全月小地图"></canvas>
+  <div class="mini-legend"><i class="near"></i>近地面 <i class="view"></i>当前视野</div>
+</div>
+
+<div class="dock" id="dock">
+  <button id="btnAuto" class="dock-btn on" type="button" title="自动旋转 (R)">
+    <svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.3-5.6M20 4v5h-5"></path></svg><span>自转</span>
+  </button>
+  <button id="btnGrid" class="dock-btn" type="button" title="经纬网 (G)">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"></circle><path d="M3.5 12h17M12 3.5c2.2 2.3 3.3 5.2 3.3 8.5S14.2 18.2 12 20.5c-2.2-2.3-3.3-5.2-3.3-8.5S9.8 5.8 12 3.5Z"></path></svg><span>经纬网</span>
+  </button>
+  <button id="btnLight" class="dock-btn" type="button" title="切换光照模式">
+    <svg id="lightIcon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M18.7 5.3l-1.4 1.4M6.7 17.3l-1.4 1.4"></path></svg><span id="lightLabel">柔光</span>
+  </button>
+  <div class="dock-sep"></div>
+  <button class="dock-btn view-btn" data-view="near" type="button">正面</button>
+  <button class="dock-btn view-btn" data-view="far" type="button">背面</button>
+  <button class="dock-btn view-btn" data-view="north" type="button">北极</button>
+  <button class="dock-btn view-btn" data-view="south" type="button">南极</button>
+  <div class="dock-sep"></div>
+  <button id="btnZoomOut" class="dock-btn icon-only" type="button" title="缩小">−</button>
+  <button id="btnZoomIn" class="dock-btn icon-only" type="button" title="放大">+</button>
+  <button id="btnReset" class="dock-btn icon-only" type="button" title="重置视角">
+    <svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.3-5.6M4 4v5h5"></path></svg>
+  </button>
+</div>
+
+<div id="coach" class="coach">拖拽旋转 · 滚轮缩放 · 点击地名查看详情</div>
+<div id="toast" class="toast"></div>
+
+<div id="loader" class="loader">
+  <div class="loader-inner">
+    <div class="loader-moon"><span></span></div>
+    <div class="loader-brand">月面 · 三维地名图</div>
+    <div class="loader-sub">LUNAR 3D ATLAS</div>
+    <div class="loader-track"><i id="loaderBar"></i></div>
+    <div id="loaderStatus" class="loader-status">正在加载月面纹理…</div>
+  </div>
+</div>
+
+<div id="modal" class="modal" role="dialog" aria-modal="true" aria-label="关于与操作说明">
+  <div class="modal-card">
+    <button id="modalClose" class="close-btn modal-close" type="button" title="关闭">×</button>
+    <div class="eyebrow">ABOUT THIS ATLAS</div>
+    <h2>月面 · 三维地名图</h2>
+    <p class="lede">把月球放进浏览器里：用真实月面影像与高程构建可旋转的三维球体，叠加 IAU 地名、月海、环形山、山脉、月谷以及人类探测器的着陆点。地名浏览与检索交互参考<a href="https://ce2.greensea.org/" target="_blank" rel="noopener">嫦娥二号月球地图</a>。</p>
+
+    <div class="modal-grid">
+      <div>
+        <h3>交互</h3>
+        <ul>
+          <li><b>拖拽</b> 旋转月球 · <b>滚轮 / 双指</b> 缩放</li>
+          <li><b>点击地名</b> 查看坐标、直径与命名来源</li>
+          <li><b>Ctrl K</b> 聚焦搜索 · <b>Esc</b> 关闭详情</li>
+          <li><b>R</b> 自转 · <b>G</b> 经纬网 · <b>方向键</b> 微调视角</li>
+          <li><b>双击月面</b> 快速定位并放大</li>
+        </ul>
+      </div>
+      <div>
+        <h3>坐标约定</h3>
+        <ul>
+          <li>IAU 月球坐标，<b>东经为正</b>（E+ / W−）。</li>
+          <li>纬度 0° 为赤道，±90° 为两极。</li>
+          <li>经度 |λ| ≤ 90° 为近地面（正面），其余为月球背面。</li>
+          <li>月球平均半径 1,737.4 km。</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>数据与影像</h3>
+    <ul class="sources">
+      <li><span>地名与检索交互参考</span><a href="https://ce2.greensea.org/" target="_blank" rel="noopener">嫦娥二号月球地图 · greensea</a></li>
+      <li><span>地名规范</span><a href="https://planetarynames.wr.usgs.gov/" target="_blank" rel="noopener">IAU / USGS Gazetteer of Planetary Nomenclature</a></li>
+      <li><span>中文译名</span><a href="https://nadc.china-vo.org/astrodict/" target="_blank" rel="noopener">中国天文学会 · 天文学名词数据库</a></li>
+      <li><span>彩色月面纹理</span><a href="https://www.solarsystemscope.com/textures/" target="_blank" rel="noopener">Solar System Scope · Moon texture（基于 NASA LRO 影像）</a></li>
+      <li><span>高程 / 地形</span><a href="https://jaanga.github.io/moon/heightmaps/" target="_blank" rel="noopener">LRO LOLA / WAC GLD100 高程镜像</a></li>
+      <li><span>三维引擎</span><a href="https://threejs.org/" target="_blank" rel="noopener">Three.js</a></li>
+    </ul>
+    <p class="fineprint">说明：月海并非液态水，而是古老玄武岩熔岩填充的平原；探测器坐标为任务公布值或 IAU 命名点，受着陆点精度限制。地名中文译名以通用译名为主，部分参考站旧译名保留为检索别名。数据已于 2026-10-18 完成独立审校：修正 7 处显著录入错误，并对差异较大的大型地貌采用 IAU LOLA 2011 坐标；审校记录见项目目录 <code>docs/qa_label_audit.md</code>。</p>
+    <div class="modal-actions">
+      <a class="primary-btn" href="https://ce2.greensea.org/" target="_blank" rel="noopener">打开嫦娥二号月球地图 ↗</a>
+      <button id="modalOk" class="ghost-btn" type="button">开始探索</button>
+    </div>
+  </div>
+</div>
+
+<div id="fatal" class="fatal" hidden>
+  <div class="fatal-card">
+    <h2>无法启动三维渲染</h2>
+    <p id="fatalMsg">当前浏览器或显卡不支持 WebGL。请尝试更新 Edge / Chrome，或开启硬件加速后重试。</p>
+  </div>
+</div>
+
+<!--__INLINE_THREE__-->
+<!--__INLINE_DATA__-->
+<!--__INLINE_APP__-->
+</body>
+</html>

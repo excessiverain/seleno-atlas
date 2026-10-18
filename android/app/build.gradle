@@ -1,0 +1,53 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.excessiverain.lunaratlas'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId 'com.excessiverain.lunaratlas'
+        minSdk 26
+        targetSdk 34
+        versionCode 1
+        versionName '1.0.0'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            shrinkResources false
+            // 本地侧载版本使用 Android 标准 debug 签名；如需长期升级请换成自己的正式签名
+            signingConfig signingConfigs.debug
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    lint {
+        abortOnError false
+        checkReleaseBuilds false
+    }
+}
+
+def webAsset = rootProject.file('../web/moon_atlas.html')
+def assetsDir = layout.projectDirectory.dir('src/main/assets')
+
+tasks.register('copyWebAsset', Copy) {
+    from(webAsset)
+    into(assetsDir)
+    doFirst {
+        if (!webAsset.exists()) {
+            throw new GradleException("Missing web asset: ${webAsset}. Run this project from the repository root or ensure web/moon_atlas.html exists.")
+        }
+    }
+}
+
+tasks.named('preBuild').configure {
+    dependsOn 'copyWebAsset'
+}
