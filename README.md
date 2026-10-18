@@ -9,7 +9,7 @@
 
 **下载 APK**：<https://github.com/excessiverain/seleno-atlas/releases/latest>
 
-当前版本：**v1.4.0** · Android 8.0+（minSdk 26）· 竖屏 · 约 4.3 MB
+当前版本：**v1.4.0** · Android 8.0+（minSdk 26）· 竖屏 · **4,228,213 字节（约 4.2 MB）**
 
 ![望月 SelenoAtlas](preview.png)
 
@@ -62,7 +62,10 @@
 > **从旧版升级**：v1.2.x / v1.3.x 使用新的 `applicationId`（`com.excessiverain.selenoatlas`），属于新应用，不能覆盖安装 v1.0.0。请先卸载旧的「月面三维地名图」，再安装望月 SelenoAtlas。  
 > **v1.4.0 签名变更**：从 v1.4.0 起改用固定 release keystore；此前 v1.3.x 是每次 CI 临时 debug 签名，因此 **v1.4.0 首次安装仍需卸载 v1.3.2 一次**。之后 v1.4.1 及以后可直接覆盖升级。
 
-v1.4.0 的 APK 大小和 SHA-256 以 Release 页面与实际构建产物为准；Release 中同时提供 `.sha256` 文件。包名 `com.excessiverain.selenoatlas`，中文系统桌面显示 **望月**，英文系统桌面显示 **SelenoAtlas**。APK 的 `assets/legal/` 内含 `LICENSE.txt`、`THIRD_PARTY_NOTICES.txt`、`AI_ASSISTANCE.txt`。
+v1.4.0 APK：**4,228,213 字节（约 4.2 MB）**  
+APK SHA-256：`baf61a86e80335b7293f8a8214d4b34bf997f2ffdc0833096cb63a129c4dd049`  
+签名证书 SHA-256：`E4:A1:FE:EE:DA:AD:EC:0C:BB:91:26:CF:8B:EC:2B:6C:9B:E3:D9:3E:74:5C:7D:C8:FA:C6:11:10:1F:71:3B:71`  
+Release 中同时提供 `.sha256` 文件。包名 `com.excessiverain.selenoatlas`，中文系统桌面显示 **望月**，英文系统桌面显示 **SelenoAtlas**。APK 的 `assets/legal/` 内含 `LICENSE.txt`、`THIRD_PARTY_NOTICES.txt`、`AI_ASSISTANCE.txt`。
 
 > 从 v1.4.0 起，CI 使用固定 release keystore 签名（GitHub Actions secret `SELENO_SIGNING_JSON`），所有后续版本证书一致，可正常覆盖升级。  
 > 请妥善备份 keystore；丢失后将无法继续覆盖升级。密钥不会提交到仓库。
