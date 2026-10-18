@@ -8,7 +8,7 @@
 
 **下载 APK**：<https://github.com/excessiverain/seleno-atlas/releases/latest>
 
-当前版本：**v1.3.0** · Android 8.0+（minSdk 26）· 竖屏 · 约 4.2 MB
+当前版本：**v1.3.1** · Android 8.0+（minSdk 26）· 竖屏 · 约 4.2 MB
 
 ![望月 SelenoAtlas](preview.png)
 
@@ -23,6 +23,7 @@
 - **中英双语界面**：自动跟随系统语言，可在左侧面板一键切换中文 / English；英文模式使用英文地名、英文类型与英文说明，中文地名作为副标签保留
 - **桌面名称跟随系统语言**：英文系统显示 **SelenoAtlas**，中文系统显示 **望月**
 - 手机端搜索联想栏已加宽，完整显示中文名、英文名、类型与坐标；结果按两行排布，长地名不再被截断
+- 手机端底部控制栏改为可换行布局，正面 / 背面 / 北极 / 南极按钮在窄屏上不再被隐藏
 - 点击地名查看坐标、直径、命名来源、任务摘要
 - 正面 / 背面 / 北极 / 南极、自动旋转、经纬网、柔光/真实日照
 - **真实日照按当前时间计算**：由设备时间推算月相与太阳直射经度，离线可用；属于低精度近似，未计月球天平动，不是星历级天文计算
@@ -46,13 +47,13 @@
 ## 安装
 
 1. 打开 <https://github.com/excessiverain/seleno-atlas/releases/latest>；
-2. 下载 `SelenoAtlas-v1.3.0.apk`；
+2. 下载 `SelenoAtlas-v1.3.1.apk`；
 3. Android 手机如提示“禁止安装未知应用”，在系统设置中允许当前浏览器/文件管理器安装；
 4. 安装后打开「望月 SelenoAtlas」。
 
-> **从旧版升级**：v1.2.x / v1.3.0 使用新的 `applicationId`（`com.excessiverain.selenoatlas`），属于新应用，不能覆盖安装 v1.0.0。请先卸载旧的「月面三维地名图」，再安装望月 SelenoAtlas。
+> **从旧版升级**：v1.2.x / v1.3.x 使用新的 `applicationId`（`com.excessiverain.selenoatlas`），属于新应用，不能覆盖安装 v1.0.0。请先卸载旧的「月面三维地名图」，再安装望月 SelenoAtlas。
 
-v1.3.0 的 APK 大小和 SHA-256 以 Release 页面与实际构建产物为准；Release 中同时提供 `.sha256` 文件。包名 `com.excessiverain.selenoatlas`，中文系统桌面显示 **望月**，英文系统桌面显示 **SelenoAtlas**。
+v1.3.1 的 APK 大小和 SHA-256 以 Release 页面与实际构建产物为准；Release 中同时提供 `.sha256` 文件。包名 `com.excessiverain.selenoatlas`，中文系统桌面显示 **望月**，英文系统桌面显示 **SelenoAtlas**。
 
 > 该 APK 使用 Android **debug 签名**，仅用于个人侧载。由于 debug 签名在不同构建机/环境下可能不同，跨版本覆盖安装若提示签名冲突，请先卸载再安装。  
 > 如需长期稳定升级，请使用自己的 release keystore 重新签名。
@@ -108,15 +109,15 @@ gradle assembleRelease
 ### 发布新版本
 
 ```bash
-git tag v1.3.1
-git push origin v1.3.1
+git tag v1.3.2
+git push origin v1.3.2
 ```
 
 推送 tag 后，GitHub Actions 会：
 
 1. 安装 JDK 17 / Android SDK 34；
 2. 构建 `assembleRelease`；
-3. 生成 `SelenoAtlas-v1.3.1.apk` 与 `.sha256`；
+3. 生成 `SelenoAtlas-v1.3.2.apk` 与 `.sha256`；
 4. 自动创建 GitHub Release 并上传 APK。
 
 也可在 Actions 页面手动运行 `workflow_dispatch`（只生成 artifact，不创建 Release）。

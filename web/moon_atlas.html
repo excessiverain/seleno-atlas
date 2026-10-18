@@ -480,11 +480,16 @@ svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.65;strok
   .result .r-type{grid-column:2;grid-row:2;justify-self:start;font-size:8px;padding:1px 5px}
   .result .r-coord{grid-column:2;grid-row:2;justify-self:end;font-size:8.5px}
   .dock{
-    display:flex;bottom:10px;transform:translateX(-50%) scale(.86);
-    transform-origin:bottom center;padding:4px;gap:1px;
+    display:flex;flex-wrap:wrap;justify-content:center;
+    bottom:8px;transform:translateX(-50%);
+    width:max-content;max-width:calc(100vw - 16px);
+    padding:5px 6px;column-gap:2px;row-gap:3px;
   }
-  .dock .view-btn,.dock .dock-sep,#btnReset{display:none}
-  .dock-btn{height:32px;font-size:10px;padding:0 7px}
+  .dock .view-btn{display:flex}
+  .dock .dock-sep{display:none}
+  #btnReset{display:none}
+  .dock-btn{height:31px;font-size:10px;padding:0 6px}
+  .dock-btn.view-btn{padding:0 6px;font-size:9.5px}
   .info-panel{left:10px;right:10px;width:auto;top:auto;bottom:10px;max-height:48vh;border-radius:15px;transform:translateY(calc(100% + 20px));transition:transform .32s cubic-bezier(.22,.8,.28,1);z-index:60}
   .info-panel.open{transform:none}
   .left-panel{left:10px;right:10px;width:auto;top:70px;bottom:auto;max-height:calc(100vh - 90px);z-index:61}

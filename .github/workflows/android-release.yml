@@ -18,7 +18,7 @@ jobs:
     name: Build WebView APK
     runs-on: ubuntu-latest
     env:
-      APK_NAME: SelenoAtlas-${{ github.ref_type == 'tag' && github.ref_name || 'v1.3.0' }}.apk
+      APK_NAME: SelenoAtlas-${{ github.ref_type == 'tag' && github.ref_name || 'v1.3.1' }}.apk
 
     steps:
       - name: Checkout
@@ -99,6 +99,7 @@ jobs:
             - 完全离线，无需网络权限
             - 系统语言适配：英文系统桌面名 `SelenoAtlas`，中文系统桌面名 `望月`
             - 修复手机端搜索联想栏过窄、无法显示完整地名的问题
+            - 修复手机端底部控制栏隐藏正面 / 背面 / 北极 / 南极按钮的问题
             - 真实日照按设备当前时间估算月相与太阳直射方向（低精度、离线）
             - 1,778 个 IAU 月球地名，243 个精选标注
             - 支持搜索、详情、经纬网、真实日照、全月小地图
