@@ -44,6 +44,8 @@
 
 ![手机端搜索联想栏](screenshots/12_mobile_search.png)
 
+![手机端底部控制栏](screenshots/10_mobile.png)
+
 ## 安装
 
 1. 打开 <https://github.com/excessiverain/seleno-atlas/releases/latest>；
