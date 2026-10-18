@@ -14,12 +14,24 @@ android {
         versionName '1.0.0'
     }
 
+    signingConfigs {
+        release {
+            // 本地侧载：复用 Android debug keystore，保证 APK 可安装。
+            // GitHub Actions 的 workflow 会在构建前确保该文件存在。
+            storeFile file(System.getProperty('user.home') + '/.android/debug.keystore')
+            storePassword 'android'
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             shrinkResources false
-            // 本地侧载版本使用 Android 标准 debug 签名；如需长期升级请换成自己的正式签名
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
