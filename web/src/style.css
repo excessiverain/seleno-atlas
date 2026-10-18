@@ -406,6 +406,10 @@ svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.65;strok
 .sources li a{font-size:10.5px;color:#aebacb;transition:.15s;line-height:1.5}
 .sources li a:hover{color:var(--gold)}
 .fineprint{font-size:9.5px;line-height:1.8;color:#616e81;margin:16px 0 0}
+.fineprint.ai-note{margin-top:10px}
+.fineprint.legal-links{margin-top:10px;font-size:9px;line-height:1.9}
+.fineprint.legal-links a{color:var(--gold);text-decoration:none}
+.fineprint.legal-links a:hover{text-decoration:underline}
 .modal-actions{display:flex;gap:9px;justify-content:flex-end;margin-top:23px;flex-wrap:wrap}
 .modal-close{position:absolute;right:16px;top:14px}
 

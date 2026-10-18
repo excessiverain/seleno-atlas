@@ -4,6 +4,7 @@ android/build/
 android/app/build/
 android/local.properties
 android/app/src/main/assets/moon_atlas.html
+android/app/src/main/assets/legal/
 *.apk
 *.aab
 *.jks

@@ -289,6 +289,8 @@
     renderOverview();
     renderList();
     applyLanguage();
+    var legalLinks = $('legalLinks');
+    if (legalLinks && window.LunarApp) legalLinks.hidden = false;
     bindUI();
     uiReady = true;
   }

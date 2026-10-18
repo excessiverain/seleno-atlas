@@ -9,7 +9,7 @@
 
 **下载 APK**：<https://github.com/excessiverain/seleno-atlas/releases/latest>
 
-当前版本：**v1.3.1** · Android 8.0+（minSdk 26）· 竖屏 · **4,221,245 字节（约 4.2 MB）**
+当前版本：**v1.3.2** · Android 8.0+（minSdk 26）· 竖屏 · 约 4.3 MB
 
 ![望月 SelenoAtlas](preview.png)
 
@@ -30,6 +30,7 @@
 - **真实日照按当前时间计算**：由设备时间推算月相与太阳直射经度，离线可用；属于低精度近似，未计月球天平动，不是星历级天文计算
 - 全月 2D 小地图，点击跳转
 - **完全离线**：纹理、地名、Three.js 全部打包在 APK 内，**不申请 INTERNET 权限**
+- **APK 内置许可与声明**：`LICENSE`、`THIRD_PARTY_NOTICES.md`、`AI_ASSISTANCE.md` 随包打包；关于页的 Legal 链接可直接打开
 - 手机视口自动降低球体分段数；退出应用后释放 WebView
 
 ## 语言 / Language
@@ -47,18 +48,18 @@
 
 ![手机端底部控制栏](screenshots/10_mobile.png)
 
+![关于页中的法律信息与 AI 声明](screenshots/11_about_legal.png)
+
 ## 安装
 
 1. 打开 <https://github.com/excessiverain/seleno-atlas/releases/latest>；
-2. 下载 `SelenoAtlas-v1.3.1.apk`；
+2. 下载 `SelenoAtlas-v1.3.2.apk`；
 3. Android 手机如提示“禁止安装未知应用”，在系统设置中允许当前浏览器/文件管理器安装；
 4. 安装后打开「望月 SelenoAtlas」。
 
 > **从旧版升级**：v1.2.x / v1.3.x 使用新的 `applicationId`（`com.excessiverain.selenoatlas`），属于新应用，不能覆盖安装 v1.0.0。请先卸载旧的「月面三维地名图」，再安装望月 SelenoAtlas。
 
-v1.3.1 APK：**4,221,245 字节（约 4.2 MB）**  
-SHA-256：`d24882b4713df191b7504d08957d14dd9c8d335b1d425af05889079294ae70d7`  
-Release 中同时提供 `.sha256` 文件。包名 `com.excessiverain.selenoatlas`，中文系统桌面显示 **望月**，英文系统桌面显示 **SelenoAtlas**。
+v1.3.2 的 APK 大小和 SHA-256 以 Release 页面与实际构建产物为准；Release 中同时提供 `.sha256` 文件。包名 `com.excessiverain.selenoatlas`，中文系统桌面显示 **望月**，英文系统桌面显示 **SelenoAtlas**。
 
 > 该 APK 使用 Android **debug 签名**，仅用于个人侧载。由于 debug 签名在不同构建机/环境下可能不同，跨版本覆盖安装若提示签名冲突，请先卸载再安装。  
 > 如需长期稳定升级，请使用自己的 release keystore 重新签名。
@@ -114,15 +115,15 @@ gradle assembleRelease
 ### 发布新版本
 
 ```bash
-git tag v1.3.2
-git push origin v1.3.2
+git tag v1.3.3
+git push origin v1.3.3
 ```
 
 推送 tag 后，GitHub Actions 会：
 
 1. 安装 JDK 17 / Android SDK 34；
 2. 构建 `assembleRelease`；
-3. 生成 `SelenoAtlas-v1.3.2.apk` 与 `.sha256`；
+3. 生成 `SelenoAtlas-v1.3.3.apk` 与 `.sha256`；
 4. 自动创建 GitHub Release 并上传 APK。
 
 也可在 Actions 页面手动运行 `workflow_dispatch`（只生成 artifact，不创建 Release）。
@@ -161,6 +162,10 @@ git push origin v1.3.2
 - 外链需要在系统浏览器中联网查看，应用本身离线。
 - debug 签名仅适合个人侧载，不适合正式分发。
 
+## AI 辅助声明 / AI Assistance
+
+本项目部分代码、UI 文案与文档在 AI 助手（DeepSeek Harness / 大模型工具）辅助下完成，并由维护者人工复核、构建和测试。应用运行时不调用任何 AI 模型，不包含生成式 AI 功能，完全离线。第三方地名、纹理和高程数据仍遵循各自来源的许可与署名，详见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。AI 辅助内容仍可能存在错误，欢迎通过 Issue 指正。完整声明见 [AI_ASSISTANCE.md](AI_ASSISTANCE.md)；v1.3.2 的 APK 内也包含该声明，可从关于页的 Legal 链接打开。
+
 ## License / 许可
 
 **Original source code and documentation** © 2026 excessiverain, released under the
@@ -172,6 +177,9 @@ LOLA/GLD100 elevation, IAU/USGS gazetteer data, Chinese translations and mission
 data remain subject to their respective source terms. See
 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for attribution, license links and
 modification notes.
+
+The same `LICENSE`, `THIRD_PARTY_NOTICES.md` and `AI_ASSISTANCE.md` files are copied
+into the APK as `assets/legal/*.txt` and are reachable from the About page's Legal links.
 
 The SelenoAtlas name, icon and visual identity are not licensed for use as a
 separate product or service identity. This project is not affiliated with NASA,

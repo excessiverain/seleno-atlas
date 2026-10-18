@@ -10,8 +10,8 @@ android {
         applicationId 'com.excessiverain.selenoatlas'
         minSdk 26
         targetSdk 34
-        versionCode 6
-        versionName '1.3.1'
+        versionCode 7
+        versionName '1.3.2'
     }
 
     signingConfigs {
@@ -48,6 +48,7 @@ android {
 }
 
 def webAsset = rootProject.file('../web/moon_atlas.html')
+def legalRoot = rootProject.file('..')
 def assetsDir = layout.projectDirectory.dir('src/main/assets')
 
 tasks.register('copyWebAsset', Copy) {
@@ -60,6 +61,26 @@ tasks.register('copyWebAsset', Copy) {
     }
 }
 
+tasks.register('copyLegalAssets', Copy) {
+    from(legalRoot) {
+        include 'LICENSE'
+        include 'THIRD_PARTY_NOTICES.md'
+        include 'AI_ASSISTANCE.md'
+        rename { name ->
+            if (name == 'LICENSE') return 'LICENSE.txt'
+            return name.replace('.md', '.txt')
+        }
+    }
+    into(new File(assetsDir.asFile, 'legal'))
+    doFirst {
+        ['LICENSE', 'THIRD_PARTY_NOTICES.md', 'AI_ASSISTANCE.md'].each { name ->
+            if (!legalRoot.toPath().resolve(name).toFile().exists()) {
+                throw new GradleException("Missing legal asset: ${name}")
+            }
+        }
+    }
+}
+
 tasks.named('preBuild').configure {
-    dependsOn 'copyWebAsset'
+    dependsOn 'copyWebAsset', 'copyLegalAssets'
 }
