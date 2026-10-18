@@ -393,7 +393,10 @@
     renderList();
     if (state.selectedId && BY_ID[state.selectedId]) renderDetail(BY_ID[state.selectedId]);
     else renderOverview();
-    if (searchOpen && searchInput && searchInput.value.trim()) runSearch(searchInput.value);
+    if (searchOpen && searchInput) {
+      if (searchInput.value.trim()) runSearch(searchInput.value);
+      else showSearchHistory();
+    }
     if (typeof keyLight !== 'undefined' && keyLight) setLightMode(state.lightMode);
     refreshLabelsForLanguage();
   }
@@ -531,6 +534,49 @@
   var searchItems = [];
   var searchActive = -1;
   var searchOpen = false;
+  var SEARCH_HISTORY_KEY = 'seleno-search-history-v1';
+  var SEARCH_HISTORY_MAX = 12;
+  var searchHistory = loadSearchHistory();
+
+  function nativeSearchStorage() {
+    return !!(window.LunarApp &&
+      typeof window.LunarApp.loadSearchHistory === 'function' &&
+      typeof window.LunarApp.saveSearchHistory === 'function');
+  }
+
+  function loadSearchHistory() {
+    try {
+      var raw = null;
+      if (nativeSearchStorage()) {
+        try { raw = window.LunarApp.loadSearchHistory(); } catch (e) { raw = null; }
+      }
+      if (raw == null) raw = localStorage.getItem(SEARCH_HISTORY_KEY);
+      var parsed = JSON.parse(raw || '[]');
+      if (!Array.isArray(parsed)) return [];
+      var out = [];
+      parsed.forEach(function (id) {
+        if (BY_ID[id] && out.indexOf(id) < 0) out.push(id);
+      });
+      return out.slice(0, SEARCH_HISTORY_MAX);
+    } catch (e) { return []; }
+  }
+  function saveSearchHistory() {
+    var json = JSON.stringify(searchHistory);
+    if (nativeSearchStorage()) {
+      try { window.LunarApp.saveSearchHistory(json); return; } catch (e) {}
+    }
+    try { localStorage.setItem(SEARCH_HISTORY_KEY, json); } catch (e) {}
+  }
+  function rememberSearch(f) {
+    if (!f) return;
+    searchHistory = [f.id].concat(searchHistory.filter(function (id) { return id !== f.id; })).slice(0, SEARCH_HISTORY_MAX);
+    saveSearchHistory();
+  }
+  function clearSearchHistory() {
+    searchHistory = [];
+    saveSearchHistory();
+    showSearchHistory();
+  }
 
   function searchScore(f, q, typeHint) {
     var best = 99;
@@ -561,7 +607,7 @@
 
   function runSearch(q) {
     q = lower(q.trim());
-    if (!q) { hideSearch(); return; }
+    if (!q) { showSearchHistory(); return; }
     var hint = typeHintFor(q);
     var out = [];
     for (var i = 0; i < FEATURES.length; i++) {
@@ -573,6 +619,33 @@
     searchItems = out.slice(0, 14).map(function (x) { return x.f; });
     searchActive = searchItems.length ? 0 : -1;
     renderSearchResults(q);
+  }
+
+  function showSearchHistory() {
+    if (!searchResults) return;
+    if (!searchHistory.length) { hideSearch(); return; }
+    searchOpen = true;
+    searchResults.hidden = false;
+    searchItems = [];
+    searchActive = -1;
+    var html = '<div class="search-section"><span>' + tr('最近搜索', 'RECENT SEARCHES') +
+      ' · ' + searchHistory.length + '</span><button class="history-clear" type="button">' +
+      tr('清除', 'Clear') + '</button></div>';
+    searchHistory.forEach(function (id) {
+      var f = BY_ID[id];
+      if (!f) return;
+      var g = groupMeta(f);
+      var secondary = secondaryName(f);
+      html += '<div class="result" data-history-id="' + esc(f.id) + '">' +
+        '<i class="r-dot" style="--c:' + g.color + '"></i>' +
+        '<div class="r-main"><div class="r-name">' + esc(nameOf(f)) + '</div>' +
+        (secondary ? '<div class="r-en">' + esc(secondary) + '</div>' : '') + '</div>' +
+        '<span class="r-type">' + esc(typeName(f)) + '</span>' +
+        '<span class="r-coord">' + Math.abs(f.lat).toFixed(1) + '°' + (f.lat >= 0 ? 'N' : 'S') + ' ' +
+          Math.abs(f.lon).toFixed(1) + '°' + (f.lon >= 0 ? 'E' : 'W') + '</span>' +
+        '</div>';
+    });
+    searchResults.innerHTML = html;
   }
 
   function highlight(text, q) {
@@ -619,20 +692,26 @@
     searchActive = -1;
   }
 
+  function chooseFeature(f) {
+    if (!f) return;
+    rememberSearch(f);
+    searchInput.value = nameOf(f);
+    hideSearch();
+    searchInput.blur();
+    selectFeature(f.id, { fly: true, fromSearch: true });
+  }
+
   function openSearch() {
     searchInput.focus();
     searchInput.select();
     searchKbd.style.opacity = '0';
     if (searchInput.value.trim()) runSearch(searchInput.value);
+    else showSearchHistory();
   }
 
   function chooseSearch(index) {
     if (index < 0 || index >= searchItems.length) return;
-    var f = searchItems[index];
-    searchInput.value = nameOf(f);
-    hideSearch();
-    searchInput.blur();
-    selectFeature(f.id, { fly: true, fromSearch: true });
+    chooseFeature(searchItems[index]);
   }
 
   /* ---------------------------------------------------------------------
@@ -820,7 +899,37 @@
     flyTo(lat, lon, radius, duration == null ? 950 : duration);
   }
 
-  function viewPreset(name) {
+  var activeViewPreset = null;
+  var viewBeforePreset = null;
+
+  function setViewPresetButton(name) {
+    document.querySelectorAll('.view-btn').forEach(function (b) {
+      b.classList.toggle('on', b.dataset.view === name);
+    });
+  }
+
+  function clearViewPresetState() {
+    activeViewPreset = null;
+    viewBeforePreset = null;
+    setViewPresetButton(null);
+  }
+
+  function viewPreset(name, force) {
+    var buttons = document.querySelectorAll('.view-btn');
+    if (!force && activeViewPreset === name) {
+      var restore = viewBeforePreset;
+      activeViewPreset = null;
+      viewBeforePreset = null;
+      buttons.forEach(function (b) { b.classList.remove('on'); });
+      clearSelection();
+      if (restore) flyTo(restore.lat, restore.lon, restore.r, 850);
+      return;
+    }
+    if (!activeViewPreset) {
+      viewBeforePreset = { lat: state.camLat, lon: state.camLon, r: state.camRadius };
+    }
+    activeViewPreset = name;
+    setViewPresetButton(name);
     clearSelection();
     var r = homeRadius();
     if (name === 'near') flyTo(5, 4, r, 950);
@@ -1692,11 +1801,12 @@
     searchInput.addEventListener('input', function () {
       var q = searchInput.value;
       $('searchClear').hidden = !q;
-      if (!q.trim()) { hideSearch(); return; }
+      if (!q.trim()) { showSearchHistory(); return; }
       runSearch(q);
     });
     searchInput.addEventListener('focus', function () {
       if (searchInput.value.trim()) runSearch(searchInput.value);
+      else showSearchHistory();
     });
     searchInput.addEventListener('keydown', function (e) {
       if (e.key === 'ArrowDown') {
@@ -1719,6 +1829,13 @@
       }
     });
     searchResults.addEventListener('click', function (e) {
+      var clear = e.target.closest('.history-clear');
+      if (clear) { e.stopPropagation(); clearSearchHistory(); return; }
+      var historyItem = e.target.closest('[data-history-id]');
+      if (historyItem) {
+        chooseFeature(BY_ID[historyItem.dataset.historyId]);
+        return;
+      }
       var item = e.target.closest('.result');
       if (!item) return;
       var idx = searchItems.findIndex(function (f) { return f.id === item.dataset.id; });
@@ -1726,14 +1843,14 @@
     });
     searchResults.addEventListener('mousemove', function (e) {
       var item = e.target.closest('.result');
-      if (!item) return;
+      if (!item || item.dataset.historyId) return;
       var idx = searchItems.findIndex(function (f) { return f.id === item.dataset.id; });
       if (idx >= 0 && idx !== searchActive) { searchActive = idx; updateSearchActive(); }
     });
     $('searchClear').addEventListener('click', function () {
       searchInput.value = '';
       $('searchClear').hidden = true;
-      hideSearch();
+      showSearchHistory();
       searchInput.focus();
     });
     document.addEventListener('pointerdown', function (e) {
@@ -1761,7 +1878,7 @@
         randomFeature();
       } else if (action === 'home') {
         clearSelection();
-        viewPreset('near');
+        viewPreset('near', true);
       }
     });
     infoClose.addEventListener('click', clearSelection);
@@ -1810,8 +1927,6 @@
     for (var i = 0; i < viewBtns.length; i++) {
       (function (b) {
         b.addEventListener('click', function () {
-          for (var j = 0; j < viewBtns.length; j++) viewBtns[j].classList.remove('on');
-          b.classList.add('on');
           viewPreset(b.dataset.view);
         });
       })(viewBtns[i]);
@@ -1820,7 +1935,7 @@
     $('btnZoomOut').addEventListener('click', function () { zoomBy(1.28); });
     $('btnReset').addEventListener('click', function () {
       clearSelection();
-      for (var j = 0; j < viewBtns.length; j++) viewBtns[j].classList.remove('on');
+      clearViewPresetState();
       flyTo(5, 4, homeRadius(), 950);
     });
 

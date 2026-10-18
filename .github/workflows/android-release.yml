@@ -18,7 +18,7 @@ jobs:
     name: Build WebView APK
     runs-on: ubuntu-latest
     env:
-      APK_NAME: SelenoAtlas-${{ github.ref_type == 'tag' && github.ref_name || 'v1.3.2' }}.apk
+      APK_NAME: SelenoAtlas-${{ github.ref_type == 'tag' && github.ref_name || 'v1.4.0' }}.apk
 
     steps:
       - name: Checkout
@@ -56,16 +56,28 @@ jobs:
         with:
           gradle-version: '8.7'
 
-      - name: Ensure debug keystore
+      - name: Restore fixed release keystore
+        env:
+          SELENO_SIGNING_JSON: ${{ secrets.SELENO_SIGNING_JSON }}
         run: |
-          mkdir -p "$HOME/.android"
-          if [ ! -f "$HOME/.android/debug.keystore" ]; then
-            keytool -genkeypair -v \
-              -keystore "$HOME/.android/debug.keystore" \
-              -storepass android -alias androiddebugkey -keypass android \
-              -keyalg RSA -keysize 2048 -validity 10000 \
-              -dname "CN=Android Debug,O=Android,C=US"
+          if [ -z "$SELENO_SIGNING_JSON" ]; then
+            echo "::error::Missing SELENO_SIGNING_JSON repository secret"
+            exit 1
           fi
+          python3 - <<'PY'
+          import base64
+          import json
+          import os
+          data = json.loads(os.environ['SELENO_SIGNING_JSON'])
+          path = os.path.join(os.environ['RUNNER_TEMP'], 'seleno-release.p12')
+          with open(path, 'wb') as f:
+              f.write(base64.b64decode(data['base64']))
+          with open(os.environ['GITHUB_ENV'], 'a') as f:
+              f.write('RELEASE_STORE_FILE=' + path + '\n')
+              f.write('RELEASE_STORE_PASSWORD=' + data['password'] + '\n')
+              f.write('RELEASE_KEY_ALIAS=' + data.get('alias', 'selenoatlas') + '\n')
+              f.write('RELEASE_KEY_PASSWORD=' + data.get('password', '') + '\n')
+          PY
 
       - name: Build release APK
         run: |
@@ -97,17 +109,20 @@ jobs:
             望月 SelenoAtlas 是月面三维地名图的 Android WebView 版本。
 
             - 完全离线，无需网络权限
+            - 最近搜索记忆：保留最近 12 个搜索地名，可点击回看、重启后保留
+            - 视角按钮可再次点击取消，回到点选前的相机视角
             - 系统语言适配：英文系统桌面名 `SelenoAtlas`，中文系统桌面名 `望月`
             - 修复手机端搜索联想栏过窄、无法显示完整地名的问题
             - 修复手机端底部控制栏隐藏正面 / 背面 / 北极 / 南极按钮的问题
             - 真实日照按设备当前时间估算月相与太阳直射方向（低精度、离线）
-            - APK 内置 MIT LICENSE、第三方声明和 AI 辅助声明（关于页可打开）
+            - 固定 release keystore 签名，后续版本可直接覆盖升级
+            - APK 内置 MIT LICENSE、第三方声明和 AI 辅助声明（模型 `deepseek-v4.1-flash-1017`，关于页可打开）
             - 1,778 个 IAU 月球地名，243 个精选标注
             - 支持搜索、详情、经纬网、真实日照、全月小地图
             - 适用于 Android 8.0+（minSdk 26）
 
             **安装**：下载 `SelenoAtlas-${{ github.ref_name }}.apk`，在手机上允许安装未知来源应用后安装。
-            该 APK 使用 Android debug 签名，便于本地侧载；如需长期升级请自行替换正式签名。
+            该 APK 使用固定 release keystore 签名，后续版本可直接覆盖升级。
           files: |
             dist/*.apk
             dist/*.sha256

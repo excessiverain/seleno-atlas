@@ -9,7 +9,7 @@
 
 **下载 APK**：<https://github.com/excessiverain/seleno-atlas/releases/latest>
 
-当前版本：**v1.3.2** · Android 8.0+（minSdk 26）· 竖屏 · **4,226,845 字节（约 4.2 MB）**
+当前版本：**v1.4.0** · Android 8.0+（minSdk 26）· 竖屏 · 约 4.3 MB
 
 ![望月 SelenoAtlas](preview.png)
 
@@ -21,6 +21,8 @@
 - **1,778 个地名要素**，其中 243 个精选地名在球面上自动避让标注
 - 月海/湖、环形山/盆地、山脉、月谷/月溪/断崖/山脊、33 个人类探测点
 - 中文名 / 拉丁名 / 旧译名 / 任务名搜索
+- **最近搜索记忆**：记住最近 12 个搜索选中的地名，空搜索框聚焦时显示，可点击快速回到；支持一键清除，应用重启后仍保留
+- **视角按钮可取消**：再次点击已选中的正面 / 背面 / 北极 / 南极，回到点选这四个按钮之前的视角
 - **中英双语界面**：自动跟随系统语言，可在左侧面板一键切换中文 / English；英文模式使用英文地名、英文类型与英文说明，中文地名作为副标签保留
 - **桌面名称跟随系统语言**：英文系统显示 **SelenoAtlas**，中文系统显示 **望月**
 - 手机端搜索联想栏已加宽，完整显示中文名、英文名、类型与坐标；结果按两行排布，长地名不再被截断
@@ -53,18 +55,17 @@
 ## 安装
 
 1. 打开 <https://github.com/excessiverain/seleno-atlas/releases/latest>；
-2. 下载 `SelenoAtlas-v1.3.2.apk`；
+2. 下载 `SelenoAtlas-v1.4.0.apk`；
 3. Android 手机如提示“禁止安装未知应用”，在系统设置中允许当前浏览器/文件管理器安装；
 4. 安装后打开「望月 SelenoAtlas」。
 
-> **从旧版升级**：v1.2.x / v1.3.x 使用新的 `applicationId`（`com.excessiverain.selenoatlas`），属于新应用，不能覆盖安装 v1.0.0。请先卸载旧的「月面三维地名图」，再安装望月 SelenoAtlas。
+> **从旧版升级**：v1.2.x / v1.3.x 使用新的 `applicationId`（`com.excessiverain.selenoatlas`），属于新应用，不能覆盖安装 v1.0.0。请先卸载旧的「月面三维地名图」，再安装望月 SelenoAtlas。  
+> **v1.4.0 签名变更**：从 v1.4.0 起改用固定 release keystore；此前 v1.3.x 是每次 CI 临时 debug 签名，因此 **v1.4.0 首次安装仍需卸载 v1.3.2 一次**。之后 v1.4.1 及以后可直接覆盖升级。
 
-v1.3.2 APK：**4,226,845 字节（约 4.2 MB）**  
-SHA-256：`ac7f9e28be118257ea6328f23a72ac3c696a7c9a9a34264bb71be20b7d869d75`  
-Release 中同时提供 `.sha256` 文件。包名 `com.excessiverain.selenoatlas`，中文系统桌面显示 **望月**，英文系统桌面显示 **SelenoAtlas**。APK 的 `assets/legal/` 内含 `LICENSE.txt`、`THIRD_PARTY_NOTICES.txt`、`AI_ASSISTANCE.txt`。
+v1.4.0 的 APK 大小和 SHA-256 以 Release 页面与实际构建产物为准；Release 中同时提供 `.sha256` 文件。包名 `com.excessiverain.selenoatlas`，中文系统桌面显示 **望月**，英文系统桌面显示 **SelenoAtlas**。APK 的 `assets/legal/` 内含 `LICENSE.txt`、`THIRD_PARTY_NOTICES.txt`、`AI_ASSISTANCE.txt`。
 
-> 该 APK 使用 Android **debug 签名**，仅用于个人侧载。由于 debug 签名在不同构建机/环境下可能不同，跨版本覆盖安装若提示签名冲突，请先卸载再安装。  
-> 如需长期稳定升级，请使用自己的 release keystore 重新签名。
+> 从 v1.4.0 起，CI 使用固定 release keystore 签名（GitHub Actions secret `SELENO_SIGNING_JSON`），所有后续版本证书一致，可正常覆盖升级。  
+> 请妥善备份 keystore；丢失后将无法继续覆盖升级。密钥不会提交到仓库。
 
 ## 权限
 
@@ -112,20 +113,30 @@ gradle assembleRelease
 # 产物：android/app/build/outputs/apk/release/app-release.apk
 ```
 
-`android/app/build.gradle` 中的 `copyWebAsset` 任务会自动把 `web/moon_atlas.html` 复制到 `app/src/main/assets/`，无需在仓库里重复提交 6 MB 的 asset 副本。
+`android/app/build.gradle` 中的 `copyWebAsset` 任务会自动把 `web/moon_atlas.html` 复制到 `app/src/main/assets/`，无需在仓库里重复提交 6 MB 的 asset 副本。`copyLegalAssets` 会把根目录的 `LICENSE`、`THIRD_PARTY_NOTICES.md`、`AI_ASSISTANCE.md` 复制为 `assets/legal/*.txt`。
+
+### 固定签名（v1.4.0+）
+
+从 v1.4.0 开始，CI 不再每次生成临时 debug key，而是从仓库 Secret 读取固定 keystore：
+
+- Secret 名：`SELENO_SIGNING_JSON`
+- 值：`{"base64":"<PKCS12 keystore base64>","password":"<password>","alias":"selenoatlas"}`
+- Workflow 会解码到 `$RUNNER_TEMP/seleno-release.p12`，通过 `RELEASE_STORE_FILE` 等环境变量交给 Gradle。
+
+请把 keystore 原始文件和密码单独备份；Secret 丢失后无法再发布同签名的新版本。不要将 keystore 提交到仓库。
 
 ### 发布新版本
 
 ```bash
-git tag v1.3.3
-git push origin v1.3.3
+git tag v1.4.1
+git push origin v1.4.1
 ```
 
 推送 tag 后，GitHub Actions 会：
 
 1. 安装 JDK 17 / Android SDK 34；
 2. 构建 `assembleRelease`；
-3. 生成 `SelenoAtlas-v1.3.3.apk` 与 `.sha256`；
+3. 生成 `SelenoAtlas-v1.4.1.apk` 与 `.sha256`；
 4. 自动创建 GitHub Release 并上传 APK。
 
 也可在 Actions 页面手动运行 `workflow_dispatch`（只生成 artifact，不创建 Release）。
@@ -137,7 +148,7 @@ git push origin v1.3.3
 - 外链：`http(s)` 通过 `JavascriptInterface` 交给系统浏览器
 - 返回键：WebView 有历史时后退，否则退出
 - 屏幕方向：锁定竖屏；状态栏/导航栏黑色，不强制 edge-to-edge
-- 签名：release 构建复用 Android debug keystore，便于本地安装
+- 签名：CI 使用固定 release keystore（GitHub Actions secret `SELENO_SIGNING_JSON`），本地无 env 时回退 debug keystore
 
 ## 数据与影像来源
 
@@ -162,11 +173,11 @@ git push origin v1.3.3
 - 页面为竖屏优化，横屏/平板布局未专门适配。
 - 地图为科普可视化，不是测绘级 GIS；着陆点坐标为任务公布值/IAU 命名点。
 - 外链需要在系统浏览器中联网查看，应用本身离线。
-- debug 签名仅适合个人侧载，不适合正式分发。
+- 固定签名密钥保存在 GitHub Actions Secret 中；请自行备份 keystore，丢失后无法覆盖升级。
 
 ## AI 辅助声明 / AI Assistance
 
-本项目部分代码、UI 文案与文档在 AI 助手（DeepSeek Harness / 大模型工具）辅助下完成，并由维护者人工复核、构建和测试。应用运行时不调用任何 AI 模型，不包含生成式 AI 功能，完全离线。第三方地名、纹理和高程数据仍遵循各自来源的许可与署名，详见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。AI 辅助内容仍可能存在错误，欢迎通过 Issue 指正。完整声明见 [AI_ASSISTANCE.md](AI_ASSISTANCE.md)；v1.3.2 的 APK 内也包含该声明，可从关于页的 Legal 链接打开。
+本项目部分代码、UI 文案与文档在 AI 助手（**`deepseek-v4.1-flash-1017`** / DeepSeek Harness）辅助下完成，并由维护者人工复核、构建和测试。应用运行时不调用任何 AI 模型，不包含生成式 AI 功能，完全离线。第三方地名、纹理和高程数据仍遵循各自来源的许可与署名，详见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。AI 辅助内容仍可能存在错误，欢迎通过 Issue 指正。完整声明见 [AI_ASSISTANCE.md](AI_ASSISTANCE.md)；v1.4.0 的 APK 内也包含该声明，可从关于页的 Legal 链接打开。
 
 ## License / 许可
 

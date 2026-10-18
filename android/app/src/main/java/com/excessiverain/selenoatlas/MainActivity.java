@@ -3,6 +3,7 @@ package com.excessiverain.selenoatlas;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -29,6 +30,8 @@ public class MainActivity extends Activity {
 
     private static final String TAG = "LunarAtlas";
     private static final String APP_URL = "file:///android_asset/moon_atlas.html";
+    private static final String PREFS = "seleno_atlas";
+    private static final String KEY_SEARCH_HISTORY = "search_history";
     private WebView webView;
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -117,7 +120,7 @@ public class MainActivity extends Activity {
         return false;
     }
 
-    /** 仅暴露一个受限制的外链打开能力给页面。 */
+    /** 仅暴露受限的外链打开和搜索历史存储能力给页面。 */
     private class NativeBridge {
         @JavascriptInterface
         public void openExternal(final String url) {
@@ -126,6 +129,19 @@ public class MainActivity extends Activity {
                     handleUri(Uri.parse(url));
                 }
             });
+        }
+
+        @JavascriptInterface
+        public String loadSearchHistory() {
+            return getSharedPreferences(PREFS, MODE_PRIVATE).getString(KEY_SEARCH_HISTORY, "[]");
+        }
+
+        @JavascriptInterface
+        public void saveSearchHistory(final String json) {
+            if (json == null || json.length() > 65536) return;
+            getSharedPreferences(PREFS, MODE_PRIVATE).edit()
+                .putString(KEY_SEARCH_HISTORY, json)
+                .apply();
         }
     }
 

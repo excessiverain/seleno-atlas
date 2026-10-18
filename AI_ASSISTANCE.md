@@ -4,7 +4,8 @@ SelenoAtlas（望月）是一个个人学习与科普项目。
 
 ## 中文
 
-- 本项目的部分代码、UI 文案与文档在 AI 助手（DeepSeek Harness / 大模型工具）辅助下完成。
+- 本项目的部分代码、UI 文案与文档在 AI 助手辅助下完成。
+- **使用的 AI 类型/模型：`deepseek-v4.1-flash-1017`**（DeepSeek Harness / 大模型工具）。
 - 所有 AI 辅助内容均经过维护者人工复核，并通过本地构建、静态检查和移动端界面测试。
 - 应用运行时不调用任何 AI 模型，不包含生成式 AI 功能，也不需要联网。
 - 地名、月面纹理、高程数据与参考内容来自各自的第三方来源，详见
@@ -13,8 +14,8 @@ SelenoAtlas（望月）是一个个人学习与科普项目。
 
 ## English
 
-- Parts of the source code, UI copy and documentation were drafted with the assistance of AI tools
-  (DeepSeek Harness / large language models).
+- Parts of the source code, UI copy and documentation were drafted with the assistance of AI tools.
+- **AI type/model used: `deepseek-v4.1-flash-1017`** (DeepSeek Harness / large language model tooling).
 - All AI-assisted material was reviewed by the maintainer and validated with local builds, static
   checks and mobile-viewport UI tests.
 - The application does not call any AI model at runtime, contains no generative-AI feature and
