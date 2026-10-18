@@ -1,4 +1,4 @@
-name: Build Android APK & Release
+name: Build 望月 SelenoAtlas APK & Release
 
 on:
   push:
@@ -18,7 +18,7 @@ jobs:
     name: Build WebView APK
     runs-on: ubuntu-latest
     env:
-      APK_NAME: lunar-atlas-${{ github.ref_type == 'tag' && github.ref_name || 'v1.0.0' }}.apk
+      APK_NAME: SelenoAtlas-${{ github.ref_type == 'tag' && github.ref_name || 'v1.2.0' }}.apk
 
     steps:
       - name: Checkout
@@ -82,7 +82,7 @@ jobs:
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
-          name: lunar-atlas-apk
+          name: SelenoAtlas APK
           path: dist/*
           retention-days: 30
 
@@ -90,16 +90,18 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
         with:
-          name: 月面三维地名图 · WebView APK ${{ github.ref_name }}
+          name: 望月 SelenoAtlas ${{ github.ref_name }} · 月面三维地名图
           body: |
-            月面三维地名图（Lunar 3D Atlas）的 Android WebView 版本。
+            **望月 SelenoAtlas** · 月面三维地名图 · Lunar 3D Atlas
+
+            望月 SelenoAtlas 是月面三维地名图的 Android WebView 版本。
 
             - 完全离线，无需网络权限
             - 1,778 个 IAU 月球地名，243 个精选标注
             - 支持搜索、详情、经纬网、真实日照、全月小地图
             - 适用于 Android 8.0+（minSdk 26）
 
-            **安装**：下载 `lunar-atlas-${{ github.ref_name }}.apk`，在手机上允许安装未知来源应用后安装。
+            **安装**：下载 `SelenoAtlas-${{ github.ref_name }}.apk`，在手机上允许安装未知来源应用后安装。
             该 APK 使用 Android debug 签名，便于本地侧载；如需长期升级请自行替换正式签名。
           files: |
             dist/*.apk

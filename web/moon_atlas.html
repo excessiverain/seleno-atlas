@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <meta name="theme-color" content="#05070c" />
-<title>月面 · 三维地名图 | Lunar 3D Atlas</title>
+<title>望月 SelenoAtlas · 月面三维地名图 | Lunar 3D Atlas</title>
 <meta name="description" content="可交互的三维月球地图：真实月面纹理、地名标注、月海与环形山检索、嫦娥与阿波罗着陆点、全月小地图。参考嫦娥二号月球地图制作。" />
 <style>
 :root{
@@ -200,6 +200,9 @@ svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.65;strok
   background:linear-gradient(90deg,transparent,rgba(230,192,130,.45),transparent);
 }
 .panel-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:12px}
+.panel-head-actions{display:flex;align-items:center;gap:6px}
+.lang-btn{font-variant-numeric:tabular-nums;letter-spacing:.08em}
+.lang-btn.on{color:var(--gold);border-color:rgba(230,192,130,.3)}
 .panel-title{font-size:14px;font-weight:600;letter-spacing:.05em;margin-top:3px}
 .mini-btn{
   display:flex;align-items:center;gap:5px;height:27px;padding:0 8px;margin-top:1px;
@@ -499,8 +502,8 @@ svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.65;strok
   <div class="brand">
     <div class="brand-mark" aria-hidden="true"><span></span></div>
     <div class="brand-copy">
-      <h1>月面 · 三维地名图</h1>
-      <p>LUNAR 3D ATLAS <i></i> <span id="brandCount">1,778 个地名</span></p>
+      <h1>望月 SelenoAtlas</h1>
+      <p>月面三维地名图 · LUNAR 3D ATLAS <i></i> <span id="brandCount">1,778 个地名</span></p>
     </div>
   </div>
 
@@ -533,10 +536,13 @@ svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.65;strok
       <div class="eyebrow">LAYERS</div>
       <div class="panel-title">图层与地标</div>
     </div>
-    <button id="btnRandom" class="mini-btn" type="button" title="随机看一个地标">
-      <svg viewBox="0 0 24 24"><path d="M4 7h3c4 0 4 10 8 10h5M17 14l3 3-3 3M4 17h3c1.4 0 2.4-1.2 3.2-2.6M14 8.6C14.8 7.2 15.8 7 17 7h3M17 4l3 3-3 3"></path></svg>
-      <span>随机</span>
-    </button>
+    <div class="panel-head-actions">
+      <button id="btnLang" class="mini-btn lang-btn" type="button" title="中文 / English">EN</button>
+      <button id="btnRandom" class="mini-btn" type="button" title="随机看一个地标">
+        <svg viewBox="0 0 24 24"><path d="M4 7h3c4 0 4 10 8 10h5M17 14l3 3-3 3M4 17h3c1.4 0 2.4-1.2 3.2-2.6M14 8.6C14.8 7.2 15.8 7 17 7h3M17 4l3 3-3 3"></path></svg>
+        <span>随机</span>
+      </button>
+    </div>
   </div>
 
   <div id="layerChips" class="layer-chips"></div>
@@ -607,8 +613,8 @@ svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.65;strok
 <div id="loader" class="loader">
   <div class="loader-inner">
     <div class="loader-moon"><span></span></div>
-    <div class="loader-brand">月面 · 三维地名图</div>
-    <div class="loader-sub">LUNAR 3D ATLAS</div>
+    <div class="loader-brand">望月 SelenoAtlas</div>
+    <div class="loader-sub">月面三维地名图 · LUNAR 3D ATLAS</div>
     <div class="loader-track"><i id="loaderBar"></i></div>
     <div id="loaderStatus" class="loader-status">正在加载月面纹理…</div>
   </div>
@@ -618,8 +624,8 @@ svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.65;strok
   <div class="modal-card">
     <button id="modalClose" class="close-btn modal-close" type="button" title="关闭">×</button>
     <div class="eyebrow">ABOUT THIS ATLAS</div>
-    <h2>月面 · 三维地名图</h2>
-    <p class="lede">把月球放进浏览器里：用真实月面影像与高程构建可旋转的三维球体，叠加 IAU 地名、月海、环形山、山脉、月谷以及人类探测器的着陆点。地名浏览与检索交互参考<a href="https://ce2.greensea.org/" target="_blank" rel="noopener">嫦娥二号月球地图</a>。</p>
+    <h2>望月 SelenoAtlas</h2>
+    <p class="lede"><b>月面三维地名图 · Lunar 3D Atlas</b><br>把月球放进浏览器里：用真实月面影像与高程构建可旋转的三维球体，叠加 IAU 地名、月海、环形山、山脉、月谷以及人类探测器的着陆点。地名浏览与检索交互参考<a href="https://ce2.greensea.org/" target="_blank" rel="noopener">嫦娥二号月球地图</a>。</p>
 
     <div class="modal-grid">
       <div>
@@ -683,7 +689,7 @@ window.__TEX_BUMP__ = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA
 </script>
 <script>
 /* =========================================================================
-   月面 · 三维地名图  /  Lunar 3D Atlas
+   望月 SelenoAtlas · 月面三维地名图  /  Lunar 3D Atlas
    单文件交付版：Three.js r128 + NASA LRO 纹理 + IAU 地名数据
    坐标约定：IAU 月球坐标，东经为正（E+），北纬为正（N+）
    ========================================================================= */
@@ -701,6 +707,21 @@ window.__TEX_BUMP__ = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA
   var D2R = Math.PI / 180;
   var R2D = 180 / Math.PI;
   var MOON_RADIUS_KM = 1737.4;
+  var LANG = (function () {
+    try {
+      var q = new URLSearchParams(location.search).get('lang');
+      if (q === 'en' || q === 'zh') return q;
+      var saved = localStorage.getItem('seleno-lang');
+      if (saved === 'en' || saved === 'zh') return saved;
+      var nav = String(navigator.language || navigator.userLanguage || 'zh').toLowerCase();
+      return nav.indexOf('zh') === 0 ? 'zh' : 'en';
+    } catch (e) { return 'zh'; }
+  })();
+  function isEN() { return LANG === 'en'; }
+  function tr(zh, en) { return LANG === 'en' ? en : zh; }
+  function nameOf(f) { return (isEN() && f.nameEn) ? f.nameEn : f.name; }
+  function secondaryName(f) { return isEN() ? f.name : (f.nameEn || ''); }
+  function altNameOf(f) { return isEN() ? (f.nameEn ? f.name : '') : (f.nameEn || ''); }
   var clamp = function (v, a, b) { return Math.max(a, Math.min(b, v)); };
   var lerp = function (a, b, t) { return a + (b - a) * t; };
   var easeInOut = function (t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; };
@@ -717,36 +738,41 @@ window.__TEX_BUMP__ = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA
      类型与分组
      --------------------------------------------------------------------- */
   var TYPE_META = {
-    mare:        { label: '月海',       color: '#8db4ff', group: 'water' },
-    lake:        { label: '湖 / 湾',    color: '#9ecbff', group: 'water' },
-    water:       { label: '月海',       color: '#8db4ff', group: 'water' },
-    crater:      { label: '环形山',     color: '#efe6d5', group: 'crater' },
-    basin:       { label: '盆地',       color: '#d8b4ff', group: 'crater' },
-    montes:      { label: '山脉',       color: '#f4c07b', group: 'mountain' },
-    mons:        { label: '山',         color: '#f4c07b', group: 'mountain' },
-    rille:       { label: '月溪',       color: '#f3a292', group: 'tectonic' },
-    valley:      { label: '月谷',       color: '#f7a273', group: 'tectonic' },
-    rupes:       { label: '断崖',       color: '#ef8a8a', group: 'tectonic' },
-    dorsum:      { label: '山脊',       color: '#e7a06c', group: 'tectonic' },
-    promontorium:{ label: '岬',         color: '#e7a06c', group: 'tectonic' },
-    catena:      { label: '链坑',       color: '#d7a4c7', group: 'tectonic' },
-    swirl:       { label: '月面涡纹',   color: '#c8a8ff', group: 'tectonic' },
-    tectonic:    { label: '构造',       color: '#e7a06c', group: 'tectonic' },
-    landing:     { label: '探测点',     color: '#78dcef', group: 'landing' }
+    mare:        { label: '月海',       en: 'Mare',            color: '#8db4ff', group: 'water' },
+    lake:        { label: '湖 / 湾',    en: 'Lake / Bay',      color: '#9ecbff', group: 'water' },
+    water:       { label: '月海',       en: 'Lunar sea',       color: '#8db4ff', group: 'water' },
+    crater:      { label: '环形山',     en: 'Crater',          color: '#efe6d5', group: 'crater' },
+    basin:       { label: '盆地',       en: 'Basin',           color: '#d8b4ff', group: 'crater' },
+    montes:      { label: '山脉',       en: 'Mountain range',  color: '#f4c07b', group: 'mountain' },
+    mons:        { label: '山',         en: 'Mountain',        color: '#f4c07b', group: 'mountain' },
+    rille:       { label: '月溪',       en: 'Rille',           color: '#f3a292', group: 'tectonic' },
+    valley:      { label: '月谷',       en: 'Valley',          color: '#f7a273', group: 'tectonic' },
+    rupes:       { label: '断崖',       en: 'Rupes',           color: '#ef8a8a', group: 'tectonic' },
+    dorsum:      { label: '山脊',       en: 'Dorsum',          color: '#e7a06c', group: 'tectonic' },
+    promontorium:{ label: '岬',         en: 'Promontorium',    color: '#e7a06c', group: 'tectonic' },
+    catena:      { label: '链坑',       en: 'Catena',          color: '#d7a4c7', group: 'tectonic' },
+    swirl:       { label: '月面涡纹',   en: 'Lunar swirl',     color: '#c8a8ff', group: 'tectonic' },
+    tectonic:    { label: '构造',       en: 'Tectonic feature', color: '#e7a06c', group: 'tectonic' },
+    landing:     { label: '探测点',     en: 'Landing site',    color: '#78dcef', group: 'landing' }
   };
   var GROUP_META = [
-    { id: 'water',    label: '月海 · 湖湾',  short: '月海',   color: '#8db4ff' },
-    { id: 'crater',   label: '环形山 · 盆地', short: '环形山', color: '#efe6d5' },
-    { id: 'mountain', label: '山脉',         short: '山脉',   color: '#f4c07b' },
-    { id: 'tectonic', label: '谷裂 · 断崖',  short: '谷裂',   color: '#f3a292' },
-    { id: 'landing',  label: '人类探测点',   short: '探测点', color: '#78dcef' }
+    { id: 'water',    label: '月海 · 湖湾',  labelEn: 'Maria · Lakes',    short: '月海',   shortEn: 'Maria',      color: '#8db4ff' },
+    { id: 'crater',   label: '环形山 · 盆地', labelEn: 'Craters · Basins', short: '环形山', shortEn: 'Craters',    color: '#efe6d5' },
+    { id: 'mountain', label: '山脉',         labelEn: 'Mountains',        short: '山脉',   shortEn: 'Mountains',  color: '#f4c07b' },
+    { id: 'tectonic', label: '谷裂 · 断崖',  labelEn: 'Tectonics',        short: '谷裂',   shortEn: 'Tectonics',  color: '#f3a292' },
+    { id: 'landing',  label: '人类探测点',   labelEn: 'Landing sites',    short: '探测点', shortEn: 'Landing',    color: '#78dcef' }
   ];
   var GROUP_BY_ID = {};
   GROUP_META.forEach(function (g) { GROUP_BY_ID[g.id] = g; });
 
-  function metaFor(f) { return TYPE_META[f.type] || { label: f.type || '地貌', color: '#dfe7f5', group: f.group || 'crater' }; }
+  function metaFor(f) { return TYPE_META[f.type] || { label: f.type || '地貌', en: f.type || 'Feature', color: '#dfe7f5', group: f.group || 'crater' }; }
   function groupMeta(f) { return GROUP_BY_ID[f.group] || GROUP_BY_ID.crater; }
-  function typeName(f) { return metaFor(f).label; }
+  function typeName(f) {
+    var m = metaFor(f);
+    return isEN() ? (m.en || m.label) : m.label;
+  }
+  function groupName(g) { return isEN() ? (g.labelEn || g.label) : g.label; }
+  function groupShort(g) { return isEN() ? (g.shortEn || g.short) : g.short; }
   function diameterOf(f) {
     return (typeof f.diameter === 'number' && isFinite(f.diameter)) ? f.diameter : null;
   }
@@ -760,9 +786,14 @@ window.__TEX_BUMP__ = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA
            Math.abs(f.lon).toFixed(2) + '°' + (f.lon >= 0 ? 'E' : 'W');
   }
   function sideOf(f) {
-    if (Math.abs(f.lat) >= 80) return f.lat > 0 ? '北极区' : '南极区';
-    if (Math.abs(f.lon) <= 90) return '近地面 · 正面';
-    return '月球背面';
+    if (Math.abs(f.lat) >= 80) return isEN() ? (f.lat > 0 ? 'North polar region' : 'South polar region') : (f.lat > 0 ? '北极区' : '南极区');
+    if (Math.abs(f.lon) <= 90) return isEN() ? 'Near side · Earth-facing' : '近地面 · 正面';
+    return isEN() ? 'Far side' : '月球背面';
+  }
+  function shortSide(f) {
+    if (Math.abs(f.lat) >= 80) return isEN() ? (f.lat > 0 ? 'North polar' : 'South polar') : (f.lat > 0 ? '北极' : '南极');
+    if (Math.abs(f.lon) <= 90) return isEN() ? 'Near side' : '正面';
+    return isEN() ? 'Far side' : '背面';
   }
   function ce2Url(f) {
     var map = f.lat > 60 ? 'north' : (f.lat < -60 ? 'south' : 'lowlat');
@@ -770,19 +801,53 @@ window.__TEX_BUMP__ = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA
     var z = d > 400 ? 3 : (d > 120 ? 4 : (d > 40 ? 5 : 6));
     return 'https://ce2.greensea.org/#/@' + f.lat.toFixed(6) + ',' + f.lon.toFixed(6) + ',' + z + 'z,' + map;
   }
+  function kindEn(kind) {
+    var m = {
+      '载人着陆': 'Manned landing', '软着陆': 'Soft landing', '采样返回': 'Sample return',
+      '巡视': 'Rover', '撞击': 'Impact', '受控撞击': 'Controlled impact',
+      '软着陆 / 巡视': 'Soft landing / rover', '着陆': 'Landing'
+    };
+    return m[kind] || kind;
+  }
+  function countryEn(c) {
+    var m = { '中国': 'China', '美国': 'United States', '苏联': 'USSR', '俄罗斯': 'Russia', '日本': 'Japan', '印度': 'India', '欧洲': 'Europe', '以色列': 'Israel' };
+    return m[c] || c;
+  }
+  var TYPE_DESC_EN = {
+    mare: 'A large, dark basaltic plain on the Moon; maria are not bodies of water.',
+    lake: 'A small dark basaltic plain or bay within the lunar highlands.',
+    crater: 'An impact crater on the lunar surface.',
+    basin: 'A large impact basin, often with multiple rings.',
+    montes: 'A mountain range on the Moon.',
+    mons: 'An isolated lunar mountain or massif.',
+    rille: 'A long, narrow channel or rille on the lunar surface.',
+    valley: 'A valley or graben on the Moon.',
+    rupes: 'A fault scarp or cliff.',
+    dorsum: 'A wrinkle ridge formed by tectonic compression.',
+    promontorium: 'A prominent cape or headland.',
+    catena: 'A chain of impact craters.',
+    swirl: 'A bright lunar swirl associated with a magnetic anomaly.',
+    tectonic: 'A tectonic or structural feature.',
+    landing: 'A human or robotic landing / impact site on the Moon.'
+  };
+
   function makeNote(f) {
     if (f.type === 'landing') return '';
     if (f.type === 'mare' || f.type === 'lake' || f.type === 'water') {
-      return '月海与月湖并非液态水体，而是古代大型撞击盆地被玄武岩熔岩填充后形成的深色平原。';
+      return tr('月海与月湖并非液态水体，而是古代大型撞击盆地被玄武岩熔岩填充后形成的深色平原。',
+                'Lunar maria are not water: they are dark basaltic plains formed when ancient impact basins were flooded by lava.');
     }
     if (f.id === 'crater-shackleton' || f.nameEn === 'Shackleton') {
-      return '南极附近的永久阴影撞击坑，坑底温度极低，是月球水冰探测的重点区域。';
+      return tr('南极附近的永久阴影撞击坑，坑底温度极低，是月球水冰探测的重点区域。',
+                'A permanently shadowed crater near the lunar south pole; its floor is extremely cold and is a key target for water-ice exploration.');
     }
     if (f.nameEn === 'Cabeus') {
-      return 'LCROSS 任务 2009 年撞击卡比厄斯坑附近，探测到水冰存在的证据。';
+      return tr('LCROSS 任务 2009 年撞击卡比厄斯坑附近，探测到水冰存在的证据。',
+                'LCROSS impacted near Cabeus in 2009 and detected evidence of water ice.');
     }
     if (f.nameEn === 'Reiner Gamma') {
-      return '典型的月面涡纹（lunar swirl），与局部磁场相关，成因仍在研究中。';
+      return tr('典型的月面涡纹（lunar swirl），与局部磁场相关，成因仍在研究中。',
+                'A classic lunar swirl associated with a local magnetic anomaly; its origin is still under study.');
     }
     return '';
   }
@@ -887,26 +952,131 @@ window.__TEX_BUMP__ = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA
     coachEl = $('coach');
 
     var total = FEATURES.length;
-    $('brandCount').textContent = total.toLocaleString('zh-CN') + ' 个地名';
+    $('brandCount').textContent = total.toLocaleString(isEN() ? 'en-US' : 'zh-CN') + tr(' 个地名', ' places');
     buildLayerChips();
     buildTabs();
     renderOverview();
     renderList();
+    applyLanguage();
     bindUI();
     uiReady = true;
   }
+
+  function setText(sel, text) {
+    var el = document.querySelector(sel);
+    if (el) el.textContent = text;
+  }
+
+  function applyStaticLanguage() {
+    document.documentElement.lang = isEN() ? 'en' : 'zh-CN';
+    document.title = isEN()
+      ? 'Wangyue SelenoAtlas · Lunar 3D Atlas'
+      : '望月 SelenoAtlas · 月面三维地名图 | Lunar 3D Atlas';
+    var brandP = document.querySelector('.brand-copy p');
+    if (brandP) {
+      brandP.innerHTML = (isEN() ? 'LUNAR 3D ATLAS' : '月面三维地名图 · LUNAR 3D ATLAS') +
+        ' <i></i> <span id="brandCount">' + FEATURES.length.toLocaleString(isEN() ? 'en-US' : 'zh-CN') +
+        (isEN() ? ' places' : ' 个地名') + '</span>';
+    }
+    var langBtn = $('btnLang');
+    if (langBtn) {
+      langBtn.textContent = isEN() ? '中' : 'EN';
+      langBtn.title = isEN() ? '切换到中文' : 'Switch to English';
+      langBtn.classList.toggle('on', isEN());
+    }
+    setText('.panel-title', tr('图层与地标', 'Layers & features'));
+    setText('#btnRandom span', tr('随机', 'Random'));
+    setText('.list-head span', tr('精选地名', 'Featured places'));
+    setText('.panel-foot span', tr('指针坐标', 'Cursor'));
+    setText('#coordReadout', coordEl && coordEl.textContent !== '—' ? coordEl.textContent : '—');
+    setText('.mini-head span', tr('全月图 2D', 'Full Moon map 2D'));
+    setText('.mini-hint', tr('点击定位', 'Click to navigate'));
+    var miniLegend = document.querySelector('.mini-legend');
+    if (miniLegend) miniLegend.innerHTML = '<i class="near"></i>' + tr('近地面', 'Near side') + ' <i class="view"></i>' + tr('当前视野', 'View');
+    setText('#btnAuto span', tr('自转', 'Rotate'));
+    setText('#btnGrid span', tr('经纬网', 'Grid'));
+    setText('#lightLabel', state.lightMode === 'soft' ? tr('柔光', 'Soft') : tr('日照', 'Sun'));
+    var viewLabels = { near: tr('正面', 'Near'), far: tr('背面', 'Far'), north: tr('北极', 'North'), south: tr('南极', 'South') };
+    document.querySelectorAll('.view-btn').forEach(function (b) { b.textContent = viewLabels[b.dataset.view] || b.textContent; });
+    if (searchInput) {
+      searchInput.placeholder = tr('搜索地名：第谷 / 静海 / 阿波罗11号 / Tycho', 'Search: Tycho / Mare Imbrium / Apollo 11');
+      searchInput.setAttribute('aria-label', tr('搜索月球地名', 'Search lunar place names'));
+    }
+    if (coachEl) coachEl.textContent = tr('拖拽旋转 · 滚轮缩放 · 点击地名查看详情', 'Drag to rotate · Scroll / pinch to zoom · Tap a label for details');
+    if (infoClose) infoClose.title = tr('关闭详情', 'Close details');
+    setText('.info-top .eyebrow', 'FEATURE');
+
+    // 关于弹窗
+    var modalCard = document.querySelector('.modal-card');
+    if (modalCard) {
+      var h2 = modalCard.querySelector('h2');
+      if (h2) h2.textContent = tr('望月 SelenoAtlas', 'Wangyue SelenoAtlas');
+      var lede = modalCard.querySelector('.lede');
+      if (lede) lede.innerHTML = isEN()
+        ? '<b>Lunar 3D Atlas</b><br>SelenoAtlas (望月) is a three-dimensional lunar place-name atlas: real LRO imagery and elevation, IAU nomenclature, maria, craters, mountains, valleys and human landing sites. Interaction and place-name browsing are inspired by the <a href="https://ce2.greensea.org/" target="_blank" rel="noopener">Chang’e-2 lunar map</a>.'
+        : '<b>月面三维地名图 · Lunar 3D Atlas</b><br>把月球放进浏览器里：用真实月面影像与高程构建可旋转的三维球体，叠加 IAU 地名、月海、环形山、山脉、月谷以及人类探测器的着陆点。地名浏览与检索交互参考<a href="https://ce2.greensea.org/" target="_blank" rel="noopener">嫦娥二号月球地图</a>。';
+      var h3s = modalCard.querySelectorAll('h3');
+      if (h3s[0]) h3s[0].textContent = tr('交互', 'Interaction');
+      if (h3s[1]) h3s[1].textContent = tr('坐标约定', 'Coordinates');
+      if (h3s[2]) h3s[2].textContent = tr('数据与影像', 'Data & imagery');
+      var uls = modalCard.querySelectorAll('.modal-grid ul');
+      if (uls[0]) uls[0].innerHTML = isEN()
+        ? '<li><b>Drag</b> to rotate · <b>Scroll / pinch</b> to zoom</li><li><b>Tap a label</b> for coordinates, size and naming notes</li><li><b>Ctrl K</b> search · <b>Esc</b> close</li><li><b>R</b> rotate · <b>G</b> grid · <b>Arrow keys</b> adjust view</li><li><b>Double-click</b> the lunar surface to locate and zoom</li>'
+        : '<li><b>拖拽</b> 旋转月球 · <b>滚轮 / 双指</b> 缩放</li><li><b>点击地名</b> 查看坐标、直径与命名来源</li><li><b>Ctrl K</b> 聚焦搜索 · <b>Esc</b> 关闭详情</li><li><b>R</b> 自转 · <b>G</b> 经纬网 · <b>方向键</b> 微调视角</li><li><b>双击月面</b> 快速定位并放大</li>';
+      if (uls[1]) uls[1].innerHTML = isEN()
+        ? '<li>IAU lunar coordinates, <b>east-positive</b> (E+ / W−).</li><li>Latitude 0° is the equator; ±90° are the poles.</li><li>|lon| ≤ 90° is the near side; the rest is the far side.</li><li>Mean lunar radius: 1,737.4 km.</li>'
+        : '<li>IAU 月球坐标，<b>东经为正</b>（E+ / W−）。</li><li>纬度 0° 为赤道，±90° 为两极。</li><li>经度 |λ| ≤ 90° 为近地面（正面），其余为月球背面。</li><li>月球平均半径 1,737.4 km。</li>';
+      var sourceLabels = ['地名与检索交互参考', '地名规范', '中文译名', '彩色月面纹理', '高程 / 地形', '三维引擎'];
+      var sourceLabelsEn = ['Place-name reference', 'Nomenclature', 'Chinese names', 'Color imagery', 'Elevation', '3D engine'];
+      modalCard.querySelectorAll('.sources li span').forEach(function (s, i) { s.textContent = isEN() ? (sourceLabelsEn[i] || s.textContent) : (sourceLabels[i] || s.textContent); });
+      var fine = modalCard.querySelector('.fineprint');
+      if (fine) fine.textContent = isEN()
+        ? 'Lunar maria are not water: they are ancient basaltic lava plains. Landing-site coordinates are task-reported or IAU named points and are subject to landing accuracy. Chinese naming notes are retained as source material; the interface is available in Chinese and English. Data reviewed 2026-10-18; see docs/qa_label_audit.md.'
+        : '说明：月海并非液态水，而是古老玄武岩熔岩填充的平原；探测器坐标为任务公布值或 IAU 命名点，受着陆点精度限制。地名中文译名以通用译名为主，部分参考站旧译名保留为检索别名。数据已于 2026-10-18 完成独立审校：修正 7 处显著录入错误，并对差异较大的大型地貌采用 IAU LOLA 2011 坐标；审校记录见项目目录 docs/qa_label_audit.md。';
+      var primary = modalCard.querySelector('.modal-actions .primary-btn');
+      var ok = modalCard.querySelector('#modalOk');
+      if (primary) primary.textContent = tr('打开嫦娥二号月球地图 ↗', 'Open the Chang’e-2 lunar map ↗');
+      if (ok) ok.textContent = tr('开始探索', 'Start exploring');
+    }
+  }
+
+  function refreshLabelsForLanguage() {
+    if (typeof labelEls === 'undefined' || !labelEls || !labelsEl) return;
+    labelsEl.innerHTML = '';
+    labelEls = {};
+    labelSizes = {};
+    visibleLabelIds = {};
+    if (state.selectedId) {
+      var f = BY_ID[state.selectedId];
+      if (f) { var el = getLabelEl(f); el.classList.add('sel'); }
+    }
+    if (state.ready) updateLabels();
+  }
+
+  function applyLanguage() {
+    applyStaticLanguage();
+    buildLayerChips();
+    buildTabs();
+    renderList();
+    if (state.selectedId && BY_ID[state.selectedId]) renderDetail(BY_ID[state.selectedId]);
+    else renderOverview();
+    if (searchOpen && searchInput && searchInput.value.trim()) runSearch(searchInput.value);
+    if (typeof keyLight !== 'undefined' && keyLight) setLightMode(state.lightMode);
+    refreshLabelsForLanguage();
+  }
+
 
   function buildLayerChips() {
     chipsEl.innerHTML = '';
     GROUP_META.forEach(function (g) {
       var b = document.createElement('button');
       b.type = 'button';
-      b.className = 'chip on';
+      b.className = 'chip' + (state.layers[g.id] ? ' on' : '');
       b.dataset.group = g.id;
       b.style.setProperty('--c', g.color);
-      b.innerHTML = '<i class="cdot"></i><span>' + esc(g.label) + '</span>' +
+      b.innerHTML = '<i class="cdot"></i><span>' + esc(groupName(g)) + '</span>' +
         '<span class="cnum">' + GROUP_COUNTS[g.id] + '</span>';
-      b.title = '显示 / 隐藏 ' + g.label;
+      b.title = tr('显示 / 隐藏 ', 'Show / hide ') + groupName(g);
       b.addEventListener('click', function () {
         state.layers[g.id] = !state.layers[g.id];
         b.classList.toggle('on', state.layers[g.id]);
@@ -922,8 +1092,19 @@ window.__TEX_BUMP__ = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA
 
   function buildTabs() {
     var tabs = document.querySelectorAll('#listTabs .tab');
+    var labels = {
+      all: tr('全部', 'All'),
+      water: tr('月海', 'Maria'),
+      crater: tr('环形山', 'Craters'),
+      mountain: tr('山脉', 'Mtns'),
+      tectonic: tr('谷裂', 'Tect.'),
+      landing: tr('探测点', 'Sites')
+    };
     for (var i = 0; i < tabs.length; i++) {
+      tabs[i].textContent = labels[tabs[i].dataset.tab] || tabs[i].textContent;
       (function (tab) {
+        if (tab.dataset.bound) return;
+        tab.dataset.bound = '1';
         tab.addEventListener('click', function () {
           state.tab = tab.dataset.tab;
           for (var j = 0; j < tabs.length; j++) tabs[j].classList.toggle('on', tabs[j] === tab);
@@ -939,31 +1120,36 @@ window.__TEX_BUMP__ = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA
     var eyebrow = document.querySelector('.info-top .eyebrow');
     if (eyebrow) eyebrow.textContent = 'OVERVIEW';
     var groupLegend = GROUP_META.map(function (g) {
-      return '<div class="legend-row" style="--c:' + g.color + '"><i></i><span>' + esc(g.label) +
+      return '<div class="legend-row" style="--c:' + g.color + '"><i></i><span>' + esc(groupName(g)) +
         '</span><span>' + FEATURED_COUNTS[g.id] + '</span></div>';
     }).join('');
+    var featureCount = FEATURES.length.toLocaleString(isEN() ? 'en-US' : 'zh-CN');
     infoBody.innerHTML =
       '<div class="overview">' +
-        '<div class="eyebrow">THE MOON · 地球的天然卫星</div>' +
-        '<h2>月球</h2>' +
+        '<div class="eyebrow">' + (isEN() ? "THE MOON · EARTH'S NATURAL SATELLITE" : 'THE MOON · 地球的天然卫星') + '</div>' +
+        '<h2>' + (isEN() ? 'The Moon' : '月球') + '</h2>' +
         '<div class="en-title">LUNA · 3D ATLAS</div>' +
-        '<p class="lede">把月球放在浏览器里。拖动球体环视正面与背面，缩放查看环形山，点击地名读取它的坐标、规模与命名来源。</p>' +
+        '<p class="lede">' + (isEN()
+          ? 'Explore the Moon in your browser. Drag to orbit, scroll or pinch to zoom, and tap a place label to read its coordinates, size and naming notes.'
+          : '把月球放在浏览器里。拖动球体环视正面与背面，缩放查看环形山，点击地名读取它的坐标、规模与命名来源。') + '</p>' +
         '<div class="fact-grid">' +
-          '<div class="fact"><div class="fk">平均半径</div><div class="fv">1,737.4<span class="fu">km</span></div></div>' +
-          '<div class="fact"><div class="fk">表面重力</div><div class="fv">1.62<span class="fu">m/s²</span></div></div>' +
-          '<div class="fact"><div class="fk">地月距离</div><div class="fv">384,400<span class="fu">km</span></div></div>' +
-          '<div class="fact"><div class="fk">恒星月</div><div class="fv">27.32<span class="fu">天</span></div></div>' +
-          '<div class="fact"><div class="fk">地名总数</div><div class="fv">' + FEATURES.length.toLocaleString('zh-CN') + '<span class="fu">个</span></div></div>' +
-          '<div class="fact"><div class="fk">精选标注</div><div class="fv">' + FEATURED.length + '<span class="fu">处</span></div></div>' +
+          '<div class="fact"><div class="fk">' + (isEN() ? 'Mean radius' : '平均半径') + '</div><div class="fv">1,737.4<span class="fu">km</span></div></div>' +
+          '<div class="fact"><div class="fk">' + (isEN() ? 'Surface gravity' : '表面重力') + '</div><div class="fv">1.62<span class="fu">m/s²</span></div></div>' +
+          '<div class="fact"><div class="fk">' + (isEN() ? 'Earth–Moon distance' : '地月距离') + '</div><div class="fv">384,400<span class="fu">km</span></div></div>' +
+          '<div class="fact"><div class="fk">' + (isEN() ? 'Sidereal month' : '恒星月') + '</div><div class="fv">27.32<span class="fu">' + (isEN() ? 'days' : '天') + '</span></div></div>' +
+          '<div class="fact"><div class="fk">' + (isEN() ? 'Named features' : '地名总数') + '</div><div class="fv">' + featureCount + '<span class="fu">' + (isEN() ? '' : '个') + '</span></div></div>' +
+          '<div class="fact"><div class="fk">' + (isEN() ? 'Featured labels' : '精选标注') + '</div><div class="fv">' + FEATURED.length + '<span class="fu">' + (isEN() ? '' : '处') + '</span></div></div>' +
         '</div>' +
-        '<div class="section-label">图例</div>' +
+        '<div class="section-label">' + (isEN() ? 'LEGEND' : '图例') + '</div>' +
         '<div class="legend">' + groupLegend + '</div>' +
         '<div class="overview-actions">' +
-          '<button class="primary-btn" data-action="random" type="button">随机看一个地标</button>' +
-          '<button class="ghost-btn" data-action="home" type="button">回到正面</button>' +
+          '<button class="primary-btn" data-action="random" type="button">' + (isEN() ? 'Random feature' : '随机看一个地标') + '</button>' +
+          '<button class="ghost-btn" data-action="home" type="button">' + (isEN() ? 'Near side' : '回到正面') + '</button>' +
         '</div>' +
-        '<div class="section-label" style="margin-top:19px">使用提示</div>' +
-        '<p class="fineprint">点击球面上的地名标签，或在左侧“精选地名”与顶部搜索框中定位。地名标签按视角与缩放在不重叠的前提下自动显示，放大后可看到更多细节。</p>' +
+        '<div class="section-label" style="margin-top:19px">' + (isEN() ? 'TIPS' : '使用提示') + '</div>' +
+        '<p class="fineprint">' + (isEN()
+          ? 'Tap a label on the globe, or use the Featured places list / search box. Labels are shown automatically without overlapping; zoom in to reveal more detail.'
+          : '点击球面上的地名标签，或在左侧“精选地名”与顶部搜索框中定位。地名标签按视角与缩放在不重叠的前提下自动显示，放大后可看到更多细节。') + '</p>' +
       '</div>';
   }
 
@@ -972,11 +1158,12 @@ window.__TEX_BUMP__ = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA
     var items = FEATURED.filter(function (f) {
       return state.layers[f._g] && (state.tab === 'all' || f._g === state.tab);
     });
-    items.sort(function (a, b) { return (b.priority || 0) - (a.priority || 0) || a.name.localeCompare(b.name, 'zh'); });
+    items.sort(function (a, b) { return (b.priority || 0) - (a.priority || 0) || nameOf(a).localeCompare(nameOf(b), isEN() ? 'en' : 'zh'); });
     var shown = items.slice(0, 90);
     listCountEl.textContent = items.length;
     if (!shown.length) {
-      listEl.innerHTML = '<div class="list-empty">这一类地标暂时没有显示。<br>试试打开上方图层，或直接搜索地名。</div>';
+      listEl.innerHTML = '<div class="list-empty">' + tr('这一类地标暂时没有显示。<br>试试打开上方图层，或直接搜索地名。',
+        'No features in this category.<br>Try enabling a layer above, or search for a place.') + '</div>';
       return;
     }
     var html = '';
@@ -986,11 +1173,11 @@ window.__TEX_BUMP__ = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA
       var km = '';
       if (d != null) km = fmtNum(d) + ' km';
       else if (f.year) km = f.year;
-      var enText = lower(f.nameEn) !== lower(f.name) ? f.nameEn : (f.altName || '');
+      var secondary = secondaryName(f);
       html += '<div class="feat-item' + (state.selectedId === f.id ? ' sel' : '') + '" data-id="' + esc(f.id) + '">' +
         '<i class="fdot" style="--c:' + g.color + '"></i>' +
-        '<div class="fmain"><div class="fname">' + esc(f.name) + '</div>' +
-        '<div class="fen">' + esc(enText || '') + '</div></div>' +
+        '<div class="fmain"><div class="fname">' + esc(nameOf(f)) + '</div>' +
+        '<div class="fen">' + esc(secondary || '') + '</div></div>' +
         (km ? '<span class="fkm">' + esc(km) + '</span>' : '') +
         '</div>';
     });
@@ -1031,11 +1218,11 @@ window.__TEX_BUMP__ = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA
   }
 
   function typeHintFor(q) {
-    if (q === '月海' || q === '海' || q === 'mare') return 'water';
-    if (q === '环形山' || q === '陨石坑' || q === '坑' || q === 'crater') return 'crater';
-    if (q === '山脉' || q === '山' || q === 'montes') return 'mountain';
-    if (q === '月谷' || q === '月溪' || q === '断崖' || q === '谷') return 'tectonic';
-    if (q === '着陆点' || q === '探测器' || q === 'landing' || q === '探月') return 'landing';
+    if (q === '月海' || q === '海' || q === 'mare' || q === 'maria' || q === 'sea' || q === 'seas') return 'water';
+    if (q === '环形山' || q === '陨石坑' || q === '坑' || q === 'crater' || q === 'craters') return 'crater';
+    if (q === '山脉' || q === '山' || q === 'montes' || q === 'mountain' || q === 'mountains') return 'mountain';
+    if (q === '月谷' || q === '月溪' || q === '断崖' || q === '谷' || q === 'rille' || q === 'rilles' || q === 'valley' || q === 'valleys') return 'tectonic';
+    if (q === '着陆点' || q === '探测器' || q === 'landing' || q === 'landings' || q === 'site' || q === 'sites' || q === '探月') return 'landing';
     return null;
   }
 
@@ -1069,17 +1256,20 @@ window.__TEX_BUMP__ = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA
     searchOpen = true;
     searchResults.hidden = false;
     if (!searchItems.length) {
-      searchResults.innerHTML = '<div class="search-empty">没有找到“<b>' + esc(q) + '</b>”。<br>试试中文名、拉丁名或任务名，例如：静海、Tycho、嫦娥五号。</div>';
+      searchResults.innerHTML = '<div class="search-empty">' + tr(
+        '没有找到“<b>' + esc(q) + '</b>”。<br>试试中文名、拉丁名或任务名，例如：静海、Tycho、嫦娥五号。',
+        'No results for “<b>' + esc(q) + '</b>”.<br>Try a Latin name, Chinese name or mission, e.g. Mare Imbrium, Tycho, Chang’e 5.'
+      ) + '</div>';
       return;
     }
-    var html = '<div class="search-section">最佳匹配 · ' + searchItems.length + ' 条</div>';
+    var html = '<div class="search-section">' + tr('最佳匹配', 'BEST MATCHES') + ' · ' + searchItems.length + tr(' 条', ' results') + '</div>';
     searchItems.forEach(function (f, idx) {
       var g = groupMeta(f);
-      var enText = (lower(f.nameEn) !== lower(f.name)) ? f.nameEn : (f.altName || '');
+      var secondary = secondaryName(f);
       html += '<div class="result' + (idx === searchActive ? ' active' : '') + '" data-id="' + esc(f.id) + '" role="option" aria-selected="' + (idx === searchActive) + '">' +
         '<i class="r-dot" style="--c:' + g.color + '"></i>' +
-        '<div class="r-main"><div class="r-name">' + highlight(f.name, q) + '</div>' +
-        (enText ? '<div class="r-en">' + highlight(enText, q) + '</div>' : '') + '</div>' +
+        '<div class="r-main"><div class="r-name">' + highlight(nameOf(f), q) + '</div>' +
+        (secondary ? '<div class="r-en">' + highlight(secondary, q) + '</div>' : '') + '</div>' +
         '<span class="r-type">' + esc(typeName(f)) + '</span>' +
         '<span class="r-coord">' + Math.abs(f.lat).toFixed(1) + '°' + (f.lat >= 0 ? 'N' : 'S') + ' ' +
           Math.abs(f.lon).toFixed(1) + '°' + (f.lon >= 0 ? 'E' : 'W') + '</span>' +
@@ -1106,7 +1296,7 @@ window.__TEX_BUMP__ = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA
   function chooseSearch(index) {
     if (index < 0 || index >= searchItems.length) return;
     var f = searchItems[index];
-    searchInput.value = f.name;
+    searchInput.value = nameOf(f);
     hideSearch();
     searchInput.blur();
     selectFeature(f.id, { fly: true, fromSearch: true });
@@ -1181,35 +1371,43 @@ window.__TEX_BUMP__ = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA
     var facts = [];
     var d = f._diameter;
     if (d != null) {
-      var scaleLabel = (f.type === 'montes' || f.type === 'rupes' || f.type === 'rille' ||
-                        f.type === 'valley' || f.type === 'dorsum' || f.type === 'catena') ? '延伸规模' : '直径';
-      facts.push([scaleLabel, fmtNum(d) + ' ' + '<small>km</small>']);
+      var linear = (f.type === 'montes' || f.type === 'rupes' || f.type === 'rille' ||
+                    f.type === 'valley' || f.type === 'dorsum' || f.type === 'catena');
+      facts.push([linear ? tr('延伸规模', 'Extent') : tr('直径', 'Diameter'), fmtNum(d) + ' ' + '<small>km</small>']);
     }
     if (typeof f.elevation === 'number' && isFinite(f.elevation) && f.elevation > 0) {
-      facts.push(['高程', fmtNum(f.elevation, 1) + ' <small>km</small>']);
+      facts.push([tr('高程', 'Elevation'), fmtNum(f.elevation, 1) + ' <small>km</small>']);
     }
     if (f.type === 'landing') {
-      if (f.country) facts.push(['国家 / 机构', esc(f.country)]);
-      if (f.year) facts.push(['年份', String(f.year)]);
-      if (f.kind) facts.push(['任务类型', esc(f.kind)]);
+      if (f.country) facts.push([tr('国家 / 机构', 'Country / agency'), esc(isEN() ? countryEn(f.country) : f.country)]);
+      if (f.year) facts.push([tr('年份', 'Year'), String(f.year)]);
+      if (f.kind) facts.push([tr('任务类型', 'Mission type'), esc(isEN() ? kindEn(f.kind) : f.kind)]);
     } else {
-      facts.push(['类别', esc(typeName(f))]);
+      facts.push([tr('类别', 'Category'), esc(typeName(f))]);
     }
-    facts.push(['所在半球', esc(sideOf(f))]);
+    facts.push([tr('所在半球', 'Hemisphere'), esc(shortSide(f))]);
     var factsHtml = facts.map(function (x) {
       return '<div class="detail-fact"><div class="k">' + esc(x[0]) + '</div><div class="v">' + x[1] + '</div></div>';
     }).join('');
 
     var note = makeNote(f);
-    var origin = f.origin ? esc(f.origin) : '暂无命名说明。';
-    var alt = f.altName ? '<div class="detail-alt">又译：' + esc(f.altName) + '</div>' : '';
-    var originLabel = f.type === 'landing' ? '任务摘要' : '命名 / 说明';
+    var origin = f.origin ? esc(f.origin) : tr('暂无命名说明。', 'No naming note available.');
+    var alt = f.altName ? '<div class="detail-alt">' + tr('又译：', 'Also known as: ') + esc(f.altName) + '</div>' : '';
+    var originLabel = f.type === 'landing'
+      ? tr('任务摘要', 'Mission summary (Chinese source)')
+      : tr('命名 / 说明', 'Naming / notes (Chinese source)');
+    var enDesc = isEN() ? (TYPE_DESC_EN[f.type] || '') : '';
+    var detailSource = isEN()
+      ? (d != null ? 'D = ' + fmtNum(d) + ' km. ' : 'Coordinates are task-reported values. ') +
+        'Names and coordinates compiled from the Chang’e-2 lunar map and the IAU Gazetteer of Planetary Nomenclature; mean lunar radius 1,737.4 km.'
+      : (d != null ? 'D = ' + fmtNum(d) + ' km。' : '坐标为任务公布值。') +
+        '地名坐标整理自嫦娥二号月球地图与 IAU 行星地名数据库，半径按 1,737.4 km 计。';
     infoBody.innerHTML =
       '<div class="detail">' +
         '<div class="detail-head">' +
-          '<div class="type-badge" style="--c:' + color + '"><i></i>' + esc(m.label) + ' · ' + esc(g.short) + '</div>' +
-          '<h2 class="detail-name">' + esc(f.name) + '</h2>' +
-          '<div class="detail-en">' + esc(f.nameEn || '') + '</div>' + alt +
+          '<div class="type-badge" style="--c:' + color + '"><i></i>' + esc(typeName(f)) + '</div>' +
+          '<h2 class="detail-name">' + esc(nameOf(f)) + '</h2>' +
+          '<div class="detail-en">' + esc(secondaryName(f) || '') + '</div>' + alt +
         '</div>' +
         '<div class="detail-coord">' +
           '<div><div class="dc-main">' + fmtCoord(f) + '</div>' +
@@ -1217,28 +1415,27 @@ window.__TEX_BUMP__ = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA
           '<span class="side-tag">' + esc(sideOf(f)) + '</span>' +
         '</div>' +
         '<div class="detail-facts">' + factsHtml + '</div>' +
+        (enDesc ? '<div class="section-label">' + tr('概述', 'OVERVIEW') + '</div><div class="detail-origin" style="margin-bottom:13px">' + esc(enDesc) + '</div>' : '') +
         '<div class="section-label">' + originLabel + '</div>' +
         '<div class="detail-origin">' + origin + '</div>' +
         (note ? '<div class="note">' + esc(note) + '</div>' : '') +
         '<div class="detail-actions">' +
-          '<button class="primary-btn" data-action="fly" type="button">定位到此处</button>' +
-          '<button class="ghost-btn" data-action="copy" type="button">复制坐标</button>' +
-          '<a class="ghost-btn" href="' + ce2Url(f) + '" target="_blank" rel="noopener">嫦娥二号地图 ↗</a>' +
+          '<button class="primary-btn" data-action="fly" type="button">' + tr('定位到此处', 'Locate') + '</button>' +
+          '<button class="ghost-btn" data-action="copy" type="button">' + tr('复制坐标', 'Copy coordinates') + '</button>' +
+          '<a class="ghost-btn" href="' + ce2Url(f) + '" target="_blank" rel="noopener">' + tr('嫦娥二号地图 ↗', 'Chang’e-2 map ↗') + '</a>' +
         '</div>' +
-        '<div class="detail-source">' +
-          (d != null ? 'D = ' + fmtNum(d) + ' km。' : '坐标为任务公布值。') +
-          '地名坐标整理自嫦娥二号月球地图与 IAU 行星地名数据库，半径按 1,737.4 km 计。</div>' +
+        '<div class="detail-source">' + detailSource + '</div>' +
       '</div>';
     infoClose.hidden = false;
   }
 
   function copyCoord(f) {
-    var text = f.name + ' / ' + (f.nameEn || '') + '  ' + fmtCoord(f).replace(/\s+/g, ' ') +
+    var text = nameOf(f) + ' / ' + (isEN() ? f.name : (f.nameEn || '')) + '  ' + fmtCoord(f).replace(/\s+/g, ' ') +
       '  https://ce2.greensea.org/#/@' + f.lat.toFixed(6) + ',' + f.lon.toFixed(6) + ',4z,lowlat';
     copyText(text);
   }
   function copyText(text) {
-    var done = function () { showToast('已复制坐标'); };
+    var done = function () { showToast(tr('已复制坐标', 'Coordinates copied')); };
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(text).then(done, function () { fallbackCopy(text, done); });
     } else fallbackCopy(text, done);
@@ -1250,7 +1447,7 @@ window.__TEX_BUMP__ = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA
       document.body.appendChild(ta); ta.select();
       document.execCommand('copy');
       document.body.removeChild(ta); cb();
-    } catch (e) { showToast('复制失败，请手动选择坐标'); }
+    } catch (e) { showToast(tr('复制失败，请手动选择坐标', 'Copy failed — please select the coordinates manually')); }
   }
 
   var toastTimer = 0;
@@ -1549,7 +1746,7 @@ window.__TEX_BUMP__ = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA
 
   function loadTextures() {
     var loader = new THREE.TextureLoader();
-    setLoading(18, '正在准备三维月球…');
+    setLoading(18, tr('正在准备三维月球…', 'Preparing the lunar globe…'));
     loader.load(TEX_COLOR, function (t) {
       t.encoding = THREE.sRGBEncoding;
       t.anisotropy = renderer.capabilities.getMaxAnisotropy();
@@ -1560,10 +1757,10 @@ window.__TEX_BUMP__ = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA
       moonMesh.material.needsUpdate = true;
       makeMiniSource(t.image);
       loading.color = true;
-      setLoading(58, '正在加载月面影像…');
+      setLoading(58, tr('正在加载月面影像…', 'Loading lunar imagery…'));
       maybeFinish();
     }, undefined, function (e) {
-      showFatal('月面彩色纹理加载失败。');
+      showFatal(tr('月面彩色纹理加载失败。', 'Failed to load the lunar color texture.'));
     });
 
     loader.load(TEX_BUMP, function (t) {
@@ -1576,7 +1773,7 @@ window.__TEX_BUMP__ = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA
       moonMesh.material.displacementMap = t;
       moonMesh.material.needsUpdate = true;
       loading.bump = true;
-      setLoading(84, '正在构建月面高程…');
+      setLoading(84, tr('正在构建月面高程…', 'Building lunar elevation…'));
       maybeFinish();
     }, undefined, function () {
       // 高程纹理失败不致命，保留彩色底图
@@ -1684,13 +1881,16 @@ window.__TEX_BUMP__ = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA
   function getLabelEl(f) {
     if (labelEls[f.id]) return labelEls[f.id];
     var el = document.createElement('div');
-    var showEn = f._displayEn && lower(f.name) !== lower(f.nameEn);
-    el.className = 'lbl ' + (f._displayEn ? 'major' : 'minor') + (f._g === 'landing' ? ' landing' : '');
+    var primary = nameOf(f);
+    var secondary = secondaryName(f);
+    var major = !!f._displayEn;
+    var showSecondary = major && lower(primary) !== lower(secondary);
+    el.className = 'lbl ' + (major ? 'major' : 'minor') + (f._g === 'landing' ? ' landing' : '');
     el.dataset.id = f.id;
     el.style.setProperty('--c', f._meta.color);
-    el.innerHTML = '<i class="dot"></i><span class="txt"><span class="zh">' + esc(f.name) + '</span>' +
-      (showEn ? '<span class="en">' + esc(f.nameEn || '') + '</span>' : '') + '</span>';
-    el.title = f.name + (f.nameEn ? '  ·  ' + f.nameEn : '') + '  ·  ' + fmtCoord(f);
+    el.innerHTML = '<i class="dot"></i><span class="txt"><span class="zh">' + esc(primary) + '</span>' +
+      (showSecondary ? '<span class="en">' + esc(secondary || '') + '</span>' : '') + '</span>';
+    el.title = primary + (secondary ? '  ·  ' + secondary : '') + '  ·  ' + fmtCoord(f);
     el.addEventListener('click', function (ev) {
       ev.stopPropagation();
       selectFeature(f.id, { fly: true });
@@ -2080,7 +2280,7 @@ window.__TEX_BUMP__ = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA
           if (pt) {
             var near = nearestFeature(pt.lat, pt.lon, 3.2);
             if (near) selectFeature(near.id, { fly: false });
-            else showToast('月面坐标  ' + Math.abs(pt.lat).toFixed(1) + '°' + (pt.lat >= 0 ? 'N' : 'S') + '  ' +
+            else showToast(tr('月面坐标  ', 'Lunar coordinates  ') + Math.abs(pt.lat).toFixed(1) + '°' + (pt.lat >= 0 ? 'N' : 'S') + '  ' +
               Math.abs(pt.lon).toFixed(1) + '°' + (pt.lon >= 0 ? 'E' : 'W'));
           }
         }
@@ -2246,6 +2446,11 @@ window.__TEX_BUMP__ = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA
       }
     });
     $('btnLayers').addEventListener('click', function () { $('leftPanel').classList.toggle('open'); });
+    $('btnLang').addEventListener('click', function () {
+      LANG = LANG === 'en' ? 'zh' : 'en';
+      try { localStorage.setItem('seleno-lang', LANG); } catch (e) {}
+      applyLanguage();
+    });
     $('btnRandom').addEventListener('click', randomFeature);
     document.addEventListener('pointerdown', function (e) {
       var lp = $('leftPanel');
@@ -2347,10 +2552,12 @@ window.__TEX_BUMP__ = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA
     var btn = $('btnLight');
     if (btn) {
       btn.classList.toggle('on', state.lightMode === 'sun');
-      btn.title = state.lightMode === 'soft' ? '光照：柔光（点击切换为真实日照）' : '光照：真实日照（点击切换为柔光）';
+      btn.title = state.lightMode === 'soft'
+        ? tr('光照：柔光（点击切换为真实日照）', 'Lighting: soft (click for true sunlight)')
+        : tr('光照：真实日照（点击切换为柔光）', 'Lighting: true sunlight (click for soft light)');
     }
     var label = $('lightLabel');
-    if (label) label.textContent = state.lightMode === 'soft' ? '柔光' : '日照';
+    if (label) label.textContent = state.lightMode === 'soft' ? tr('柔光', 'Soft') : tr('日照', 'Sun');
     updateLights();
   }
 

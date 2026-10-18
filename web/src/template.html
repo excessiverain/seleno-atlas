@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <meta name="theme-color" content="#05070c" />
-<title>月面 · 三维地名图 | Lunar 3D Atlas</title>
+<title>望月 SelenoAtlas · 月面三维地名图 | Lunar 3D Atlas</title>
 <meta name="description" content="可交互的三维月球地图：真实月面纹理、地名标注、月海与环形山检索、嫦娥与阿波罗着陆点、全月小地图。参考嫦娥二号月球地图制作。" />
 <style>
 /*__INLINE_CSS__*/
@@ -21,8 +21,8 @@
   <div class="brand">
     <div class="brand-mark" aria-hidden="true"><span></span></div>
     <div class="brand-copy">
-      <h1>月面 · 三维地名图</h1>
-      <p>LUNAR 3D ATLAS <i></i> <span id="brandCount">1,778 个地名</span></p>
+      <h1>望月 SelenoAtlas</h1>
+      <p>月面三维地名图 · LUNAR 3D ATLAS <i></i> <span id="brandCount">1,778 个地名</span></p>
     </div>
   </div>
 
@@ -55,10 +55,13 @@
       <div class="eyebrow">LAYERS</div>
       <div class="panel-title">图层与地标</div>
     </div>
-    <button id="btnRandom" class="mini-btn" type="button" title="随机看一个地标">
-      <svg viewBox="0 0 24 24"><path d="M4 7h3c4 0 4 10 8 10h5M17 14l3 3-3 3M4 17h3c1.4 0 2.4-1.2 3.2-2.6M14 8.6C14.8 7.2 15.8 7 17 7h3M17 4l3 3-3 3"></path></svg>
-      <span>随机</span>
-    </button>
+    <div class="panel-head-actions">
+      <button id="btnLang" class="mini-btn lang-btn" type="button" title="中文 / English">EN</button>
+      <button id="btnRandom" class="mini-btn" type="button" title="随机看一个地标">
+        <svg viewBox="0 0 24 24"><path d="M4 7h3c4 0 4 10 8 10h5M17 14l3 3-3 3M4 17h3c1.4 0 2.4-1.2 3.2-2.6M14 8.6C14.8 7.2 15.8 7 17 7h3M17 4l3 3-3 3"></path></svg>
+        <span>随机</span>
+      </button>
+    </div>
   </div>
 
   <div id="layerChips" class="layer-chips"></div>
@@ -129,8 +132,8 @@
 <div id="loader" class="loader">
   <div class="loader-inner">
     <div class="loader-moon"><span></span></div>
-    <div class="loader-brand">月面 · 三维地名图</div>
-    <div class="loader-sub">LUNAR 3D ATLAS</div>
+    <div class="loader-brand">望月 SelenoAtlas</div>
+    <div class="loader-sub">月面三维地名图 · LUNAR 3D ATLAS</div>
     <div class="loader-track"><i id="loaderBar"></i></div>
     <div id="loaderStatus" class="loader-status">正在加载月面纹理…</div>
   </div>
@@ -140,8 +143,8 @@
   <div class="modal-card">
     <button id="modalClose" class="close-btn modal-close" type="button" title="关闭">×</button>
     <div class="eyebrow">ABOUT THIS ATLAS</div>
-    <h2>月面 · 三维地名图</h2>
-    <p class="lede">把月球放进浏览器里：用真实月面影像与高程构建可旋转的三维球体，叠加 IAU 地名、月海、环形山、山脉、月谷以及人类探测器的着陆点。地名浏览与检索交互参考<a href="https://ce2.greensea.org/" target="_blank" rel="noopener">嫦娥二号月球地图</a>。</p>
+    <h2>望月 SelenoAtlas</h2>
+    <p class="lede"><b>月面三维地名图 · Lunar 3D Atlas</b><br>把月球放进浏览器里：用真实月面影像与高程构建可旋转的三维球体，叠加 IAU 地名、月海、环形山、山脉、月谷以及人类探测器的着陆点。地名浏览与检索交互参考<a href="https://ce2.greensea.org/" target="_blank" rel="noopener">嫦娥二号月球地图</a>。</p>
 
     <div class="modal-grid">
       <div>

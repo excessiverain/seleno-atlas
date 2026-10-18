@@ -1,4 +1,4 @@
-package com.excessiverain.lunaratlas;
+package com.excessiverain.selenoatlas;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;

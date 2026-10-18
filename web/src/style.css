@@ -191,6 +191,9 @@ svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.65;strok
   background:linear-gradient(90deg,transparent,rgba(230,192,130,.45),transparent);
 }
 .panel-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:12px}
+.panel-head-actions{display:flex;align-items:center;gap:6px}
+.lang-btn{font-variant-numeric:tabular-nums;letter-spacing:.08em}
+.lang-btn.on{color:var(--gold);border-color:rgba(230,192,130,.3)}
 .panel-title{font-size:14px;font-weight:600;letter-spacing:.05em;margin-top:3px}
 .mini-btn{
   display:flex;align-items:center;gap:5px;height:27px;padding:0 8px;margin-top:1px;

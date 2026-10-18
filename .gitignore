@@ -20,3 +20,5 @@ Thumbs.db
 .idea/
 .vscode/
 *.log
+
+release/
