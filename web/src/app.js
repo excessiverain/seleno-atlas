@@ -473,16 +473,29 @@
     });
     var labelsBtn = document.createElement('button');
     labelsBtn.type = 'button';
-    labelsBtn.className = 'chip label-chip' + (state.labelsHidden ? '' : ' on');
-    labelsBtn.style.setProperty('--c', '#8fa3c4');
-    labelsBtn.innerHTML = '<i class="cdot"></i><span>' + tr('地名标签', 'Labels') + '</span>';
+    labelsBtn.className = 'label-toggle' + (state.labelsHidden ? ' off' : '');
+    labelsBtn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12s3.4-5.8 9.5-5.8S21.5 12 21.5 12 18.1 17.8 12 17.8 2.5 12 2.5 12Z"></path><circle cx="12" cy="12" r="2.5"></circle><path class="eye-slash" d="M3 3l18 18"></path></svg>' +
+      '<span>' + (state.labelsHidden ? tr('显示地名标签', 'Show labels') : tr('隐藏地名标签', 'Hide labels')) + '</span>' +
+      '<em>' + (state.labelsHidden ? tr('已隐藏', 'OFF') : tr('显示中', 'ON')) + '</em>';
     labelsBtn.title = tr('显示 / 隐藏球面地名标签', 'Show / hide globe labels');
+    labelsBtn.setAttribute('aria-pressed', state.labelsHidden ? 'true' : 'false');
     labelsBtn.addEventListener('click', function () {
       state.labelsHidden = !state.labelsHidden;
-      labelsBtn.classList.toggle('on', !state.labelsHidden);
+      updateLabelToggle();
       updateLabelsVisibility();
     });
     chipsEl.appendChild(labelsBtn);
+  }
+
+  function updateLabelToggle() {
+    var btn = chipsEl ? chipsEl.querySelector('.label-toggle') : null;
+    if (!btn) return;
+    btn.classList.toggle('off', state.labelsHidden);
+    btn.setAttribute('aria-pressed', state.labelsHidden ? 'true' : 'false');
+    var label = btn.querySelector('span');
+    var stateEl = btn.querySelector('em');
+    if (label) label.textContent = state.labelsHidden ? tr('显示地名标签', 'Show labels') : tr('隐藏地名标签', 'Hide labels');
+    if (stateEl) stateEl.textContent = state.labelsHidden ? tr('已隐藏', 'OFF') : tr('显示中', 'ON');
   }
 
   function updateLabelsVisibility() {

@@ -9,7 +9,7 @@
 
 **下载 APK**：<https://github.com/excessiverain/seleno-atlas/releases/latest>
 
-当前版本：**v1.5.0** · Android 8.0+（minSdk 26）· 竖屏 · **4,233,290 字节（约 4.2 MB）**
+当前版本：**v1.5.1** · Android 8.0+（minSdk 26）· 竖屏 · 约 4.2 MB
 
 ![望月 SelenoAtlas](preview.png)
 
@@ -25,7 +25,7 @@
 - **视角按钮可取消**：再次点击已选中的正面 / 背面 / 北极 / 南极，回到点选这四个按钮之前的视角
 - **左上角 Overview 入口**：点击月球图标打开概览，不新增顶栏按钮
 - **动态拖动灵敏度**：放大观察时降低旋转灵敏度，远距离保持原有手感
-- **地名标签开关**：一键隐藏/显示球面地名标签，方便观察裸月面
+- **地名标签开关**：Layers 面板中独立一行「隐藏地名标签 / Show labels」，一键隐藏/显示球面地名标签，方便观察裸月面
 - **中英文月相名称**：新月、蛾眉月、上弦月、盈凸月、满月、亏凸月、下弦月、残月
 - **历史月相**：按日期查看月相名称、照明比例和中国农历日期
 - **月食历史**：2001–2035 年月食目录，按年份查看类型与食分
@@ -62,17 +62,14 @@
 ## 安装
 
 1. 打开 <https://github.com/excessiverain/seleno-atlas/releases/latest>；
-2. 下载 `SelenoAtlas-v1.5.0.apk`；
+2. 下载 `SelenoAtlas-v1.5.1.apk`；
 3. Android 手机如提示“禁止安装未知应用”，在系统设置中允许当前浏览器/文件管理器安装；
 4. 安装后打开「望月 SelenoAtlas」。
 
 > **从旧版升级**：v1.2.x / v1.3.x 使用新的 `applicationId`（`com.excessiverain.selenoatlas`），属于新应用，不能覆盖安装 v1.0.0。请先卸载旧的「月面三维地名图」，再安装望月 SelenoAtlas。  
-> **v1.4.0 起固定签名**：v1.4.0 / v1.5.0 使用同一 release keystore；若从 v1.3.x 首次升级，仍需卸载一次，之后可直接覆盖升级。
+> **v1.4.0 起固定签名**：v1.4.0 / v1.5.x 使用同一 release keystore；若从 v1.3.x 首次升级，仍需卸载一次，之后可直接覆盖升级。
 
-v1.5.0 APK：**4,233,290 字节（约 4.2 MB）**  
-APK SHA-256：`8ba58c6897e1829a28156fd8761723be6445cdf02413576233bb308931975dd0`  
-签名证书 SHA-256：`E4:A1:FE:EE:DA:AD:EC:0C:BB:91:26:CF:8B:EC:2B:6C:9B:E3:D9:3E:74:5C:7D:C8:FA:C6:11:10:1F:71:3B:71`  
-Release 中同时提供 `.sha256` 文件。包名 `com.excessiverain.selenoatlas`，中文系统桌面显示 **望月**，英文系统桌面显示 **SelenoAtlas**。APK 的 `assets/legal/` 内含 `LICENSE.txt`、`THIRD_PARTY_NOTICES.txt`、`AI_ASSISTANCE.txt`。
+v1.5.1 的 APK 大小和 SHA-256 以 Release 页面与实际构建产物为准；Release 中同时提供 `.sha256` 文件。包名 `com.excessiverain.selenoatlas`，中文系统桌面显示 **望月**，英文系统桌面显示 **SelenoAtlas**。APK 的 `assets/legal/` 内含 `LICENSE.txt`、`THIRD_PARTY_NOTICES.txt`、`AI_ASSISTANCE.txt`。
 
 > 从 v1.4.0 起，CI 使用固定 release keystore 签名（GitHub Actions secret `SELENO_SIGNING_JSON`），所有后续版本证书一致，可正常覆盖升级。  
 > 请妥善备份 keystore；丢失后将无法继续覆盖升级。密钥不会提交到仓库。
@@ -138,15 +135,15 @@ gradle assembleRelease
 ### 发布新版本
 
 ```bash
-git tag v1.5.1
-git push origin v1.5.1
+git tag v1.5.2
+git push origin v1.5.2
 ```
 
 推送 tag 后，GitHub Actions 会：
 
 1. 安装 JDK 17 / Android SDK 34；
 2. 构建 `assembleRelease`；
-3. 生成 `SelenoAtlas-v1.5.1.apk` 与 `.sha256`；
+3. 生成 `SelenoAtlas-v1.5.2.apk` 与 `.sha256`；
 4. 自动创建 GitHub Release 并上传 APK。
 
 也可在 Actions 页面手动运行 `workflow_dispatch`（只生成 artifact，不创建 Release）。
