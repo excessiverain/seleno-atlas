@@ -18,7 +18,7 @@ jobs:
     name: Build WebView APK
     runs-on: ubuntu-latest
     env:
-      APK_NAME: SelenoAtlas-${{ github.ref_type == 'tag' && github.ref_name || 'v1.4.0' }}.apk
+      APK_NAME: SelenoAtlas-${{ github.ref_type == 'tag' && github.ref_name || 'v1.5.0' }}.apk
 
     steps:
       - name: Checkout
@@ -115,6 +115,11 @@ jobs:
             - 修复手机端搜索联想栏过窄、无法显示完整地名的问题
             - 修复手机端底部控制栏隐藏正面 / 背面 / 北极 / 南极按钮的问题
             - 真实日照按设备当前时间估算月相与太阳直射方向（低精度、离线）
+            - 左上角月球图标可打开 Overview；放大时降低拖动灵敏度
+            - 中英文月相名称；可按日期查看历史月相
+            - 地名标签开关；一键隐藏/显示球面标签
+            - 月食历史 2001–2035（NASA GSFC 公开目录，署名）
+            - 中国农历/夏历显示（WebView Intl Chinese calendar）
             - 固定 release keystore 签名，后续版本可直接覆盖升级
             - APK 内置 MIT LICENSE、第三方声明和 AI 辅助声明（模型 `deepseek-v4.1-flash-1017`，关于页可打开）
             - 1,778 个 IAU 月球地名，243 个精选标注

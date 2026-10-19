@@ -77,14 +77,23 @@ SOFTWARE.
 - 人类探测器着陆点、任务年份与国别信息来自公开任务资料、IAU Gazetteer 和 NASA/ALSO/任务页面等公开来源。
 - 着陆点坐标为任务公布值或 IAU 命名点，受着陆精度限制；仅用于科普可视化。
 
-## 7. 项目自身内容
+## 7. Lunar eclipse catalog
+
+- 数据文件：`web/data/eclipses.json` / 应用内 `ECLIPSES`
+- 来源：NASA GSFC, Five Millennium Catalog of Lunar Eclipses: -1999 to +3000
+  (Fred Espenak & Jean Meeus), https://eclipse.gsfc.nasa.gov/LEcat5/LE2001-2100.html
+- 选段：2001–2035 年；字段：日期、类型（半影/偏食/全食）、半影/本影食分
+- 来源要求署名：**“Eclipse Predictions by Fred Espenak and Jean Meeus (NASA's GSFC)”**
+- 说明：月食数据为静态历史目录，不在应用内实时计算；如需更新，请以 NASA 目录为准。
+
+## 8. 项目自身内容
 
 - 原始 Android WebView 壳代码、Web 应用源码、构建脚本与文档：
   Copyright (c) 2026 excessiverain，MIT（见根目录 `LICENSE`）。
 - 应用内中文/英文说明文字、UI 文案与数据整理：除第三方来源内容外，随项目代码按 MIT 发布。
 - `preview.png`、`screenshots/`、`web/textures/*_check.jpg` 等截图/校验图包含上述第三方月面纹理，再分发时同样应保留本声明中的纹理署名。
 
-## 8. No affiliation
+## 9. No affiliation
 
 本项目是个人学习与科普项目，与 NASA、IAU、USGS、Solar System Scope、中国天文学会或嫦娥二号任务团队无隶属或官方合作关系。相关名称与标识归其各自权利人所有。
 

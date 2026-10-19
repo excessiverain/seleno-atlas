@@ -14,6 +14,9 @@
     return;
   }
 
+  // NASA GSFC lunar eclipse catalog, 2001-2035 (Fred Espenak & Jean Meeus).
+  var ECLIPSES = [{"date":"2001-01-09","type":"T","pen":2.1618,"umb":1.1889},{"date":"2001-07-05","type":"P","pen":1.5475,"umb":0.4947},{"date":"2001-12-30","type":"N","pen":0.8933,"umb":-0.1155},{"date":"2002-05-26","type":"N","pen":0.6893,"umb":-0.2888},{"date":"2002-06-24","type":"N","pen":0.2095,"umb":-0.7925},{"date":"2002-11-20","type":"N","pen":0.86,"umb":-0.2264},{"date":"2003-05-16","type":"T","pen":2.0747,"umb":1.1276},{"date":"2003-11-09","type":"T","pen":2.1139,"umb":1.0178},{"date":"2004-05-04","type":"T","pen":2.2627,"umb":1.3035},{"date":"2004-10-28","type":"T","pen":2.3637,"umb":1.3081},{"date":"2005-04-24","type":"N","pen":0.865,"umb":-0.1436},{"date":"2005-10-17","type":"P","pen":1.0585,"umb":0.0625},{"date":"2006-03-14","type":"Nx","pen":1.03,"umb":-0.0604},{"date":"2006-09-07","type":"P","pen":1.1329,"umb":0.1837},{"date":"2007-03-03","type":"T","pen":2.3188,"umb":1.2328},{"date":"2008-02-21","type":"T","pen":2.1451,"umb":1.1062},{"date":"2008-08-16","type":"P","pen":1.8366,"umb":0.8076},{"date":"2009-02-09","type":"N","pen":0.8994,"umb":-0.0882},{"date":"2009-07-07","type":"N","pen":0.1562,"umb":-0.9133},{"date":"2009-08-06","type":"N","pen":0.4019,"umb":-0.6661},{"date":"2009-12-31","type":"P","pen":1.0556,"umb":0.0763},{"date":"2010-06-26","type":"P","pen":1.5773,"umb":0.5368},{"date":"2010-12-21","type":"T","pen":2.2807,"umb":1.2561},{"date":"2011-12-10","type":"T","pen":2.186,"umb":1.1061},{"date":"2012-06-04","type":"P","pen":1.3183,"umb":0.3704},{"date":"2012-11-28","type":"N","pen":0.9155,"umb":-0.1873},{"date":"2013-04-25","type":"P","pen":0.9866,"umb":0.0148},{"date":"2013-05-25","type":"Nb","pen":0.0157,"umb":-0.9335},{"date":"2013-10-18","type":"N","pen":0.7649,"umb":-0.2718},{"date":"2014-04-15","type":"T","pen":2.3182,"umb":1.2907},{"date":"2014-10-08","type":"T","pen":2.1456,"umb":1.1659},{"date":"2015-04-04","type":"T","pen":2.0792,"umb":1.0008},{"date":"2015-09-28","type":"T","pen":2.2296,"umb":1.2764},{"date":"2016-03-23","type":"N","pen":0.7747,"umb":-0.3118},{"date":"2016-09-16","type":"N","pen":0.908,"umb":-0.0635},{"date":"2017-02-11","type":"N","pen":0.9884,"umb":-0.0354},{"date":"2017-08-07","type":"P","pen":1.2886,"umb":0.2464},{"date":"2018-01-31","type":"T","pen":2.2941,"umb":1.3155},{"date":"2019-01-21","type":"T","pen":2.1684,"umb":1.1953},{"date":"2019-07-16","type":"P","pen":1.7037,"umb":0.6531},{"date":"2020-01-10","type":"N","pen":0.8956,"umb":-0.116},{"date":"2020-06-05","type":"N","pen":0.5683,"umb":-0.4053},{"date":"2020-07-05","type":"N","pen":0.3546,"umb":-0.6436},{"date":"2020-11-30","type":"N","pen":0.8285,"umb":-0.262},{"date":"2021-05-26","type":"T","pen":1.954,"umb":1.0095},{"date":"2021-11-19","type":"P","pen":2.072,"umb":0.9742},{"date":"2023-05-05","type":"N","pen":0.9636,"umb":-0.0457},{"date":"2023-10-28","type":"P","pen":1.1181,"umb":0.122},{"date":"2024-03-25","type":"N","pen":0.9557,"umb":-0.1325},{"date":"2024-09-18","type":"P","pen":1.0372,"umb":0.0848},{"date":"2025-03-14","type":"T","pen":2.2595,"umb":1.1784},{"date":"2025-09-07","type":"T","pen":2.344,"umb":1.3619},{"date":"2026-03-03","type":"T","pen":2.1838,"umb":1.1507},{"date":"2026-08-28","type":"P","pen":1.9645,"umb":0.9299},{"date":"2027-02-20","type":"N","pen":0.9266,"umb":-0.0569},{"date":"2027-07-18","type":"Ne","pen":0.0014,"umb":-1.068},{"date":"2027-08-17","type":"N","pen":0.5456,"umb":-0.5254},{"date":"2028-01-12","type":"P","pen":1.0468,"umb":0.0662},{"date":"2028-07-06","type":"P","pen":1.4266,"umb":0.3892},{"date":"2028-12-31","type":"T","pen":2.2742,"umb":1.2463},{"date":"2029-12-20","type":"T","pen":2.2008,"umb":1.1174},{"date":"2030-06-15","type":"P","pen":1.448,"umb":0.5025},{"date":"2030-12-09","type":"N","pen":0.9416,"umb":-0.1628},{"date":"2031-05-07","type":"N","pen":0.8814,"umb":-0.0904},{"date":"2031-06-05","type":"N","pen":0.1292,"umb":-0.8199},{"date":"2031-10-30","type":"N","pen":0.7161,"umb":-0.3204},{"date":"2032-04-25","type":"T","pen":2.2192,"umb":1.1913},{"date":"2032-10-18","type":"T","pen":2.083,"umb":1.1028},{"date":"2033-04-14","type":"T","pen":2.1711,"umb":1.0944},{"date":"2033-10-08","type":"T","pen":2.3057,"umb":1.3497},{"date":"2034-04-03","type":"N","pen":0.8545,"umb":-0.2274},{"date":"2034-09-28","type":"P","pen":0.9911,"umb":0.0144},{"date":"2035-02-22","type":"N","pen":0.9652,"umb":-0.0535},{"date":"2035-08-19","type":"P","pen":1.1507,"umb":0.1037}];
+
   var D2R = Math.PI / 180;
   var R2D = 180 / Math.PI;
   var MOON_RADIUS_KM = 1737.4;
@@ -123,11 +126,51 @@
     return { lon: lon, lat: 0, phase: phase };
   }
 
+  function ephemerisNow() {
+    return state.ephemerisDate ? new Date(state.ephemerisDate + 'T12:00:00') : new Date();
+  }
+
+  function phaseInfo(date) {
+    var p = subsolarPoint(date || ephemerisNow());
+    var phase = p.phase;
+    var illum = (1 - Math.cos(phase * Math.PI * 2)) * 50;
+    var names = [
+      ['新月 / 朔', 'New Moon'],
+      ['蛾眉月', 'Waxing Crescent'],
+      ['上弦月', 'First Quarter'],
+      ['盈凸月', 'Waxing Gibbous'],
+      ['满月 / 望', 'Full Moon'],
+      ['亏凸月', 'Waning Gibbous'],
+      ['下弦月', 'Last Quarter'],
+      ['残月', 'Waning Crescent']
+    ];
+    var idx = 0;
+    if (phase < 0.03 || phase > 0.97) idx = 0;
+    else if (phase < 0.22) idx = 1;
+    else if (phase < 0.28) idx = 2;
+    else if (phase < 0.47) idx = 3;
+    else if (phase < 0.53) idx = 4;
+    else if (phase < 0.72) idx = 5;
+    else if (phase < 0.78) idx = 6;
+    else idx = 7;
+    return { name: tr(names[idx][0], names[idx][1]), illum: illum, phase: phase, date: date || ephemerisNow() };
+  }
+
+  function lunarDateText(date) {
+    try {
+      var fmt = new Intl.DateTimeFormat(isEN() ? 'en-u-ca-chinese' : 'zh-CN-u-ca-chinese', {
+        year: 'numeric', month: 'long', day: 'numeric'
+      });
+      return fmt.format(date);
+    } catch (e) { return '—'; }
+  }
+
   function updateSunFromClock() {
-    var p = subsolarPoint(new Date());
+    var p = subsolarPoint(ephemerisNow());
     state.sunLon = p.lon;
     state.sunLat = p.lat;
     if (state.lightMode === 'sun') updateLights();
+    updatePhaseUI();
   }
 
   function kindEn(kind) {
@@ -221,6 +264,8 @@
     autoRotate: true,
     grid: false,
     lightMode: 'soft',
+    labelsHidden: false,
+    ephemerisDate: null,
     sunLon: null,
     sunLat: null,
     layers: { water: true, crater: true, mountain: true, tectonic: true, landing: true },
@@ -398,6 +443,8 @@
       else showSearchHistory();
     }
     if (typeof keyLight !== 'undefined' && keyLight) setLightMode(state.lightMode);
+    updatePhaseUI();
+    if ($('astroModal') && $('astroModal').classList.contains('open')) renderEclipseList();
     refreshLabelsForLanguage();
   }
 
@@ -424,6 +471,23 @@
       });
       chipsEl.appendChild(b);
     });
+    var labelsBtn = document.createElement('button');
+    labelsBtn.type = 'button';
+    labelsBtn.className = 'chip label-chip' + (state.labelsHidden ? '' : ' on');
+    labelsBtn.style.setProperty('--c', '#8fa3c4');
+    labelsBtn.innerHTML = '<i class="cdot"></i><span>' + tr('地名标签', 'Labels') + '</span>';
+    labelsBtn.title = tr('显示 / 隐藏球面地名标签', 'Show / hide globe labels');
+    labelsBtn.addEventListener('click', function () {
+      state.labelsHidden = !state.labelsHidden;
+      labelsBtn.classList.toggle('on', !state.labelsHidden);
+      updateLabelsVisibility();
+    });
+    chipsEl.appendChild(labelsBtn);
+  }
+
+  function updateLabelsVisibility() {
+    if (labelsEl) labelsEl.classList.toggle('labels-hidden', state.labelsHidden);
+    if (!state.labelsHidden && state.ready) updateLabels();
   }
 
   function buildTabs() {
@@ -476,6 +540,8 @@
           '<div class="fact"><div class="fk">' + (isEN() ? 'Named features' : '地名总数') + '</div><div class="fv">' + featureCount + '<span class="fu">' + (isEN() ? '' : '个') + '</span></div></div>' +
           '<div class="fact"><div class="fk">' + (isEN() ? 'Featured labels' : '精选标注') + '</div><div class="fv">' + FEATURED.length + '<span class="fu">' + (isEN() ? '' : '处') + '</span></div></div>' +
         '</div>' +
+        '<div class="overview-phase"><i class="phase-dot"></i><span>' + (isEN() ? 'Moon phase' : '当前月相') +
+          '：<b id="overviewPhaseName">—</b> · <span id="overviewPhaseIllum">—</span></span></div>' +
         '<div class="section-label">' + (isEN() ? 'LEGEND' : '图例') + '</div>' +
         '<div class="legend">' + groupLegend + '</div>' +
         '<div class="overview-actions">' +
@@ -487,6 +553,33 @@
           ? 'Tap a label on the globe, or use the Featured places list / search box. Labels are shown automatically without overlapping; zoom in to reveal more detail.'
           : '点击球面上的地名标签，或在左侧“精选地名”与顶部搜索框中定位。地名标签按视角与缩放在不重叠的前提下自动显示，放大后可看到更多细节。') + '</p>' +
       '</div>';
+    updatePhaseUI();
+  }
+
+  function dateInputValue(date) {
+    var y = date.getFullYear();
+    var m = String(date.getMonth() + 1).padStart(2, '0');
+    var d = String(date.getDate()).padStart(2, '0');
+    return y + '-' + m + '-' + d;
+  }
+
+  function updatePhaseUI() {
+    var info = phaseInfo();
+    var date = info.date;
+    var nameEl = document.getElementById('overviewPhaseName');
+    var illumEl = document.getElementById('overviewPhaseIllum');
+    var astroPhase = document.getElementById('astroPhase');
+    var astroMeta = document.getElementById('astroPhaseMeta');
+    var lunarEl = document.getElementById('astroLunar');
+    var astroDate = document.getElementById('astroDate');
+    if (nameEl) nameEl.textContent = info.name;
+    if (illumEl) illumEl.textContent = fmtNum(info.illum, 0) + '%';
+    if (astroPhase) astroPhase.textContent = info.name;
+    if (astroMeta) astroMeta.textContent = (isEN() ? 'Illumination ' : '照明 ') + fmtNum(info.illum, 0) + '% · ' +
+      (isEN() ? 'moon age ' : '月龄 ') + fmtNum(info.phase * 29.530588853, 1) + (isEN() ? ' days' : ' 天') +
+      ' · ' + dateInputValue(date);
+    if (lunarEl) lunarEl.textContent = lunarDateText(date);
+    if (astroDate && !astroDate.value) astroDate.value = dateInputValue(date);
   }
 
   function renderList() {
@@ -742,6 +835,7 @@
     var infoPanel = $('infoPanel');
     if (isMobile()) {
       $('leftPanel').classList.remove('open');
+      infoPanel.classList.remove('overview-mode');
       infoPanel.classList.add('open');
     }
     if (opts.fly !== false) {
@@ -759,7 +853,23 @@
     hideMarker();
     updateListSelection();
     renderOverview();
-    $('infoPanel').classList.remove('open');
+    $('infoPanel').classList.remove('open', 'overview-mode');
+  }
+
+  function openOverview() {
+    var panel = $('infoPanel');
+    if (isMobile() && panel.classList.contains('open') && panel.classList.contains('overview-mode')) {
+      clearSelection();
+      return;
+    }
+    clearSelection();
+    if (isMobile()) {
+      panel.classList.add('open', 'overview-mode');
+      infoClose.hidden = false;
+    } else {
+      if (infoBody) infoBody.scrollTop = 0;
+      panel.scrollTop = 0;
+    }
   }
 
   function viewRadiusFor(f) {
@@ -949,6 +1059,12 @@
     var target = Math.max(330, Math.min(central - 24, h * 0.86));
     var focal = (h / 2) / Math.tan(19 * D2R);
     return clamp(Math.sqrt(1 + Math.pow(2 * focal / target, 2)), 3.30, 5.4);
+  }
+
+  function rotationSpeed() {
+    var z = clamp(state.camRadius / homeRadius(), 0.25, 1.2);
+    // 近距离时降低拖动灵敏度，远距离保持原有手感。
+    return 0.23 * (0.55 + 0.45 * z);
   }
 
   function zoomBy(factor) {
@@ -1391,7 +1507,7 @@
   }
 
   function updateLabels() {
-    if (!state.ready) return;
+    if (!state.ready || state.labelsHidden) return;
     var r = state.camRadius;
     var invR = 1 / r;
     var W = window.innerWidth, H = window.innerHeight;
@@ -1698,7 +1814,7 @@
       dragState.x = e.clientX; dragState.y = e.clientY;
       var dt = Math.max(8, now() - dragState.t) / 1000;
       dragState.t = now();
-      var speed = 0.23;
+      var speed = rotationSpeed();
       var dLon = -dx * speed;
       var dLat = dy * speed;
       state.camLon += dLon;
@@ -1796,6 +1912,71 @@
   /* ---------------------------------------------------------------------
      UI 事件
      --------------------------------------------------------------------- */
+  /* ---------------------------------------------------------------------
+     天文工具
+     --------------------------------------------------------------------- */
+  function openAstro() {
+    var modal = $('astroModal');
+    if (!modal) return;
+    var astroDate = $('astroDate');
+    if (astroDate && !astroDate.value) astroDate.value = dateInputValue(ephemerisNow());
+    renderEclipseYears();
+    renderEclipseList();
+    updatePhaseUI();
+    modal.classList.add('open');
+  }
+
+  function closeAstro() {
+    var modal = $('astroModal');
+    if (modal) modal.classList.remove('open');
+  }
+
+  function applyAstroDate(value) {
+    state.ephemerisDate = value || null;
+    if (state.ephemerisDate) setLightMode('sun');
+    else updateSunFromClock();
+    updatePhaseUI();
+  }
+
+  function eclipseTypeName(type) {
+    if (!type) return '—';
+    if (type.charAt(0) === 'T') return tr('月全食', 'Total');
+    if (type.charAt(0) === 'P') return tr('月偏食', 'Partial');
+    return tr('半影月食', 'Penumbral');
+  }
+
+  function renderEclipseYears() {
+    var sel = $('eclipseYear');
+    if (!sel) return;
+    if (!sel.options.length) {
+      var years = {};
+      ECLIPSES.forEach(function (e) { years[e.date.slice(0, 4)] = true; });
+      Object.keys(years).sort().forEach(function (y) {
+        var o = document.createElement('option');
+        o.value = y; o.textContent = y;
+        sel.appendChild(o);
+      });
+      var nowYear = String(new Date().getFullYear());
+      sel.value = years[nowYear] ? nowYear : (Object.keys(years).sort().pop() || '');
+    }
+  }
+
+  function renderEclipseList() {
+    var list = $('eclipseList');
+    var sel = $('eclipseYear');
+    var count = $('eclipseCount');
+    if (!list || !sel) return;
+    var year = sel.value;
+    var rows = ECLIPSES.filter(function (e) { return e.date.slice(0, 4) === year; });
+    if (count) count.textContent = rows.length + tr(' 次', ' eclipses');
+    list.innerHTML = rows.map(function (e) {
+      var mag = e.type.charAt(0) === 'N' ? e.pen : e.umb;
+      return '<div class="eclipse-row"><b>' + esc(e.date) + '</b><span class="etype">' +
+        esc(eclipseTypeName(e.type)) + '</span><span class="emag">' +
+        (e.type.charAt(0) === 'N' ? 'pen ' : 'umb ') + fmtNum(mag, 2) + '</span></div>';
+    }).join('') || '<div class="astro-meta">' + tr('这一年没有月食记录。', 'No lunar eclipses this year.') + '</div>';
+  }
+
   function bindUI() {
     // 搜索
     searchInput.addEventListener('input', function () {
@@ -1884,7 +2065,21 @@
     infoClose.addEventListener('click', clearSelection);
 
     // 顶栏
+    $('brandBtn').addEventListener('click', openOverview);
     $('btnHelp').addEventListener('click', function () { $('modal').classList.add('open'); });
+    $('btnAstro').addEventListener('click', openAstro);
+    $('astroClose').addEventListener('click', closeAstro);
+    $('astroModal').addEventListener('click', function (e) {
+      if (e.target === $('astroModal')) closeAstro();
+    });
+    $('astroDate').addEventListener('change', function () {
+      applyAstroDate(this.value);
+    });
+    $('astroNow').addEventListener('click', function () {
+      $('astroDate').value = dateInputValue(new Date());
+      applyAstroDate(null);
+    });
+    $('eclipseYear').addEventListener('change', renderEclipseList);
     $('modalClose').addEventListener('click', closeModal);
     $('modalOk').addEventListener('click', closeModal);
     $('modal').addEventListener('click', function (e) { if (e.target === $('modal')) closeModal(); });
@@ -2016,7 +2211,7 @@
     camera.updateProjectionMatrix();
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     renderer.setSize(window.innerWidth, window.innerHeight, false);
-    if (isMobile()) $('infoPanel').classList.remove('open');
+    if (isMobile()) $('infoPanel').classList.remove('open', 'overview-mode');
     drawMini();
   }
 

@@ -9,7 +9,7 @@
 
 **下载 APK**：<https://github.com/excessiverain/seleno-atlas/releases/latest>
 
-当前版本：**v1.4.0** · Android 8.0+（minSdk 26）· 竖屏 · **4,228,213 字节（约 4.2 MB）**
+当前版本：**v1.5.0** · Android 8.0+（minSdk 26）· 竖屏 · 约 4.3 MB
 
 ![望月 SelenoAtlas](preview.png)
 
@@ -23,6 +23,13 @@
 - 中文名 / 拉丁名 / 旧译名 / 任务名搜索
 - **最近搜索记忆**：记住最近 12 个搜索选中的地名，空搜索框聚焦时显示，可点击快速回到；支持一键清除，应用重启后仍保留
 - **视角按钮可取消**：再次点击已选中的正面 / 背面 / 北极 / 南极，回到点选这四个按钮之前的视角
+- **左上角 Overview 入口**：点击月球图标打开概览，不新增顶栏按钮
+- **动态拖动灵敏度**：放大观察时降低旋转灵敏度，远距离保持原有手感
+- **地名标签开关**：一键隐藏/显示球面地名标签，方便观察裸月面
+- **中英文月相名称**：新月、蛾眉月、上弦月、盈凸月、满月、亏凸月、下弦月、残月
+- **历史月相**：按日期查看月相名称、照明比例和中国农历日期
+- **月食历史**：2001–2035 年月食目录，按年份查看类型与食分
+- **中国农历/夏历**：显示中国农历日期（WebView Chinese calendar）
 - **中英双语界面**：自动跟随系统语言，可在左侧面板一键切换中文 / English；英文模式使用英文地名、英文类型与英文说明，中文地名作为副标签保留
 - **桌面名称跟随系统语言**：英文系统显示 **SelenoAtlas**，中文系统显示 **望月**
 - 手机端搜索联想栏已加宽，完整显示中文名、英文名、类型与坐标；结果按两行排布，长地名不再被截断
@@ -55,17 +62,14 @@
 ## 安装
 
 1. 打开 <https://github.com/excessiverain/seleno-atlas/releases/latest>；
-2. 下载 `SelenoAtlas-v1.4.0.apk`；
+2. 下载 `SelenoAtlas-v1.5.0.apk`；
 3. Android 手机如提示“禁止安装未知应用”，在系统设置中允许当前浏览器/文件管理器安装；
 4. 安装后打开「望月 SelenoAtlas」。
 
 > **从旧版升级**：v1.2.x / v1.3.x 使用新的 `applicationId`（`com.excessiverain.selenoatlas`），属于新应用，不能覆盖安装 v1.0.0。请先卸载旧的「月面三维地名图」，再安装望月 SelenoAtlas。  
-> **v1.4.0 签名变更**：从 v1.4.0 起改用固定 release keystore；此前 v1.3.x 是每次 CI 临时 debug 签名，因此 **v1.4.0 首次安装仍需卸载 v1.3.2 一次**。之后 v1.4.1 及以后可直接覆盖升级。
+> **v1.4.0 起固定签名**：v1.4.0 / v1.5.0 使用同一 release keystore；若从 v1.3.x 首次升级，仍需卸载一次，之后可直接覆盖升级。
 
-v1.4.0 APK：**4,228,213 字节（约 4.2 MB）**  
-APK SHA-256：`baf61a86e80335b7293f8a8214d4b34bf997f2ffdc0833096cb63a129c4dd049`  
-签名证书 SHA-256：`E4:A1:FE:EE:DA:AD:EC:0C:BB:91:26:CF:8B:EC:2B:6C:9B:E3:D9:3E:74:5C:7D:C8:FA:C6:11:10:1F:71:3B:71`  
-Release 中同时提供 `.sha256` 文件。包名 `com.excessiverain.selenoatlas`，中文系统桌面显示 **望月**，英文系统桌面显示 **SelenoAtlas**。APK 的 `assets/legal/` 内含 `LICENSE.txt`、`THIRD_PARTY_NOTICES.txt`、`AI_ASSISTANCE.txt`。
+v1.5.0 的 APK 大小和 SHA-256 以 Release 页面与实际构建产物为准；Release 中同时提供 `.sha256` 文件。包名 `com.excessiverain.selenoatlas`，中文系统桌面显示 **望月**，英文系统桌面显示 **SelenoAtlas**。APK 的 `assets/legal/` 内含 `LICENSE.txt`、`THIRD_PARTY_NOTICES.txt`、`AI_ASSISTANCE.txt`。
 
 > 从 v1.4.0 起，CI 使用固定 release keystore 签名（GitHub Actions secret `SELENO_SIGNING_JSON`），所有后续版本证书一致，可正常覆盖升级。  
 > 请妥善备份 keystore；丢失后将无法继续覆盖升级。密钥不会提交到仓库。
@@ -131,15 +135,15 @@ gradle assembleRelease
 ### 发布新版本
 
 ```bash
-git tag v1.4.1
-git push origin v1.4.1
+git tag v1.5.1
+git push origin v1.5.1
 ```
 
 推送 tag 后，GitHub Actions 会：
 
 1. 安装 JDK 17 / Android SDK 34；
 2. 构建 `assembleRelease`；
-3. 生成 `SelenoAtlas-v1.4.1.apk` 与 `.sha256`；
+3. 生成 `SelenoAtlas-v1.5.1.apk` 与 `.sha256`；
 4. 自动创建 GitHub Release 并上传 APK。
 
 也可在 Actions 页面手动运行 `workflow_dispatch`（只生成 artifact，不创建 Release）。
@@ -153,11 +157,24 @@ git push origin v1.4.1
 - 屏幕方向：锁定竖屏；状态栏/导航栏黑色，不强制 edge-to-edge
 - 签名：CI 使用固定 release keystore（GitHub Actions secret `SELENO_SIGNING_JSON`），本地无 env 时回退 debug keystore
 
+## 天文 / Astronomy
+
+- **左上角月球图标**打开 Overview，显示当前月相、照明比例和关键数据；手机端以底部面板呈现。
+- **左侧面板底部「天文 / Astro」**打开天文工具：
+  - 选择日期查看历史月相、月龄和照明
+  - 查看对应中国农历日期
+  - 按年份浏览 2001–2035 年月食历史
+- 月相名称和农历会跟随中文/English 切换。
+- 月食数据为 NASA GSFC 公开目录的静态子集，不在应用内计算；数据来源已在上述「数据与影像来源」和 `THIRD_PARTY_NOTICES.md` 中署名。
+- 天文功能全部离线，不申请定位、通知等权限。
+
 ## 数据与影像来源
 
 - 地名：嫦娥二号月球地图（greensea）／IAU-USGS Gazetteer／中国天文学会天文学名词数据库
 - 彩色月面纹理：Solar System Scope Moon texture（基于 NASA LRO 影像）
 - 高程：LRO LOLA / WAC GLD100 高程镜像（Jaanga heightmaps）
+- 月食历史：NASA GSFC / Fred Espenak & Jean Meeus, Five Millennium Catalog of Lunar Eclipses（2001–2035 子集，公开数据，需署名）
+- 月相与农历：低精度月相算法；中国农历优先使用 WebView `Intl` Chinese calendar
 - 三维引擎：Three.js r128
 - 交互参考：[嫦娥二号月球地图](https://ce2.greensea.org/)
 

@@ -19,7 +19,7 @@
 
 <header class="topbar">
   <div class="brand">
-    <div class="brand-mark" aria-hidden="true"><span></span></div>
+    <button id="brandBtn" class="brand-mark" type="button" aria-label="月球概览 / Lunar overview"><span></span></button>
     <div class="brand-copy">
       <h1>望月 SelenoAtlas</h1>
       <p>月面三维地名图 · LUNAR 3D ATLAS <i></i> <span id="brandCount">1,778 个地名</span></p>
@@ -83,6 +83,7 @@
   <div class="panel-foot">
     <span>指针坐标</span>
     <span id="coordReadout">—</span>
+    <button id="btnAstro" class="astro-link" type="button">天文 / Astro</button>
   </div>
 </aside>
 
@@ -188,6 +189,41 @@
       <a class="primary-btn" href="https://ce2.greensea.org/" target="_blank" rel="noopener">打开嫦娥二号月球地图 ↗</a>
       <button id="modalOk" class="ghost-btn" type="button">开始探索</button>
     </div>
+  </div>
+</div>
+
+<div id="astroModal" class="modal astro-modal" role="dialog" aria-modal="true" aria-label="天文工具 / Astronomy">
+  <div class="modal-card astro-card">
+    <button id="astroClose" class="close-btn modal-close" type="button" title="关闭">×</button>
+    <div class="eyebrow">ASTRONOMY</div>
+    <h2>月相与历法 <small>Phase &amp; Calendars</small></h2>
+    <p class="lede">按日期查看月相、中国农历和公开月食目录；所有计算均在本机离线完成。</p>
+
+    <section class="astro-section">
+      <h3>月相 / Moon phase</h3>
+      <div class="astro-date-row">
+        <input id="astroDate" type="date" aria-label="选择日期 / Select date" />
+        <button id="astroNow" class="ghost-btn" type="button">回到今天 / Today</button>
+      </div>
+      <div id="astroPhase" class="astro-phase">—</div>
+      <div id="astroPhaseMeta" class="astro-meta"></div>
+    </section>
+
+    <section class="astro-section">
+      <h3>中国农历 / Chinese lunisolar calendar</h3>
+      <div id="astroLunar" class="astro-lunar">—</div>
+      <div class="astro-meta">由 WebView/ICU 的 Chinese calendar 计算；不可用时显示 —。</div>
+    </section>
+
+    <section class="astro-section">
+      <h3>月食历史 / Lunar eclipse history</h3>
+      <div class="astro-eclipse-controls">
+        <select id="eclipseYear" aria-label="月食年份 / Eclipse year"></select>
+        <span id="eclipseCount" class="astro-meta"></span>
+      </div>
+      <div id="eclipseList" class="eclipse-list"></div>
+      <div class="astro-source">Source: NASA GSFC / Fred Espenak &amp; Jean Meeus, Five Millennium Catalog of Lunar Eclipses. Data selection: 2001–2035.</div>
+    </section>
   </div>
 </div>
 
