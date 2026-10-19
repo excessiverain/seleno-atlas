@@ -18,7 +18,7 @@ jobs:
     name: Build WebView APK
     runs-on: ubuntu-latest
     env:
-      APK_NAME: SelenoAtlas-${{ github.ref_type == 'tag' && github.ref_name || 'v1.5.2' }}.apk
+      APK_NAME: SelenoAtlas-${{ github.ref_type == 'tag' && github.ref_name || 'v1.5.3' }}.apk
 
     steps:
       - name: Checkout
