@@ -156,13 +156,132 @@
     return { name: tr(names[idx][0], names[idx][1]), illum: illum, phase: phase, date: date || ephemerisNow() };
   }
 
-  function lunarDateText(date) {
+  var STEM_CN = '甲乙丙丁戊己庚辛壬癸';
+  var BRANCH_CN = '子丑寅卯辰巳午未申酉戌亥';
+  var STEM_PY = ['Jia', 'Yi', 'Bing', 'Ding', 'Wu', 'Ji', 'Geng', 'Xin', 'Ren', 'Gui'];
+  var BRANCH_PY = ['Zi', 'Chou', 'Yin', 'Mao', 'Chen', 'Si', 'Wu', 'Wei', 'Shen', 'You', 'Xu', 'Hai'];
+  var ZODIAC_EN = ['Rat', 'Ox', 'Tiger', 'Rabbit', 'Dragon', 'Snake', 'Horse', 'Goat', 'Monkey', 'Rooster', 'Dog', 'Pig'];
+  var OFFICER_CN = '建除满平定执破危成收开闭';
+  var OFFICER_EN = ['Establish', 'Remove', 'Full', 'Balance', 'Stable', 'Initiate', 'Destruction', 'Danger', 'Success', 'Receive', 'Open', 'Close'];
+
+  function modN(n, m) { return ((n % m) + m) % m; }
+
+  function solarEclipticLongitude(date) {
+    var jd = date.getTime() / 86400000 + 2440587.5;
+    var n = jd - 2451545.0;
+    var L = 280.460 + 0.9856474 * n;
+    var g = (357.528 + 0.9856003 * n) * D2R;
+    L += 1.915 * Math.sin(g) + 0.020 * Math.sin(2 * g);
+    return modN(L, 360);
+  }
+
+  function julianDayNumber(date) {
+    var y = date.getFullYear();
+    var m = date.getMonth() + 1;
+    var d = date.getDate();
+    if (m <= 2) { y -= 1; m += 12; }
+    var A = Math.floor(y / 100);
+    var B = 2 - A + Math.floor(A / 4);
+    return Math.floor(365.25 * (y + 4716)) + Math.floor(30.6001 * (m + 1)) + d + B - 1524;
+  }
+
+  function lunarParts(date) {
     try {
-      var fmt = new Intl.DateTimeFormat(isEN() ? 'en-u-ca-chinese' : 'zh-CN-u-ca-chinese', {
-        year: 'numeric', month: 'long', day: 'numeric'
+      var locale = isEN() ? 'en-u-ca-chinese' : 'zh-CN-u-ca-chinese';
+      var fmt = new Intl.DateTimeFormat(locale, { year: 'numeric', month: 'long', day: 'numeric' });
+      var parts = fmt.formatToParts(date);
+      var monthName = '';
+      var day = 0;
+      parts.forEach(function (p) {
+        if (p.type === 'month') monthName = p.value;
+        if (p.type === 'day') day = parseInt(p.value, 10);
       });
-      return fmt.format(date);
-    } catch (e) { return '—'; }
+      var numFmt = new Intl.DateTimeFormat('en-u-ca-chinese', { month: 'numeric' });
+      var monthNum = parseInt(numFmt.format(date).replace(/[^0-9]/g, ''), 10);
+      return { monthName: monthName, monthNum: monthNum || 0, day: day || 0, leap: /闰|Leap/i.test(monthName) };
+    } catch (e) { return null; }
+  }
+
+  function lunarDayCn(n) {
+    var cn = '一二三四五六七八九';
+    if (n === 10) return '初十';
+    if (n > 0 && n < 10) return '初' + cn.charAt(n - 1);
+    if (n >= 11 && n < 20) return '十' + cn.charAt(n - 11);
+    if (n === 20) return '二十';
+    if (n > 20 && n < 30) return '廿' + cn.charAt(n - 21);
+    if (n === 30) return '三十';
+    return '—';
+  }
+
+  function ordinalEn(n) {
+    var s = ['th', 'st', 'nd', 'rd'];
+    var v = n % 100;
+    return n + (s[(v - 20) % 10] || s[v] || s[0]);
+  }
+
+  function gregorianText(date) {
+    try {
+      return new Intl.DateTimeFormat(isEN() ? 'en-SG' : 'zh-CN', { year: 'numeric', month: 'short', day: 'numeric' }).format(date);
+    } catch (e) { return dateInputValue(date); }
+  }
+
+  function sexagenaryInfo(date) {
+    var y = date.getFullYear();
+    var lon = solarEclipticLongitude(date);
+    // 干支年以立春为界；1–2 月太阳黄经仍小于 315° 时按上一年。
+    if ((date.getMonth() === 0 || date.getMonth() === 1) && lon < 315) y -= 1;
+    var yStem = modN(y - 4, 10);
+    var yBranch = modN(y - 4, 12);
+    var monthStart = 315;
+    var monthIdx = Math.floor(modN(lon - monthStart, 360) / 30);
+    var mBranch = modN(2 + monthIdx, 12);
+    var firstMonthStem = [2, 4, 6, 8, 0][yStem % 5];
+    var mStem = modN(firstMonthStem + modN(mBranch - 2, 12), 10);
+    var dayIndex = modN(julianDayNumber(date) + 49, 60);
+    var dStem = dayIndex % 10;
+    var dBranch = dayIndex % 12;
+    var officer = modN(dBranch - mBranch + 12, 12);
+    return {
+      yearCn: STEM_CN.charAt(yStem) + BRANCH_CN.charAt(yBranch) + '年',
+      monthCn: STEM_CN.charAt(mStem) + BRANCH_CN.charAt(mBranch) + '月',
+      dayCn: STEM_CN.charAt(dStem) + BRANCH_CN.charAt(dBranch) + '日',
+      yearEn: STEM_PY[yStem] + '-' + BRANCH_PY[yBranch] + ' year (Year of the ' + ZODIAC_EN[yBranch] + ')',
+      monthEn: STEM_PY[mStem] + '-' + BRANCH_PY[mBranch] + ' month',
+      dayEn: STEM_PY[dStem] + '-' + BRANCH_PY[dBranch] + ' day',
+      officerCn: OFFICER_CN.charAt(officer) + '日',
+      officerEn: OFFICER_EN[officer]
+    };
+  }
+
+  function lunarCalendarText(date) {
+    var parts = lunarParts(date);
+    var sex = sexagenaryInfo(date);
+    if (!parts) {
+      return {
+        zh: '农历 —', en: 'Lunar date unavailable',
+        ganzhiZh: sex.yearCn + ' · ' + sex.monthCn + ' · ' + sex.dayCn,
+        ganzhiEn: sex.yearEn + ' · ' + sex.monthEn + ' · ' + sex.dayEn,
+        zhiZh: '十二直：' + sex.officerCn,
+        zhiEn: 'Twelve Day Officers: ' + sex.officerEn
+      };
+    }
+    var monthZh = parts.leap ? '闰' + parts.monthName.replace(/^闰/, '') : parts.monthName;
+    var zh = '农历' + monthZh + lunarDayCn(parts.day);
+    var enMonth = (parts.leap ? 'leap ' : '') + ordinalEn(parts.monthNum) + ' lunar month';
+    var en = ordinalEn(parts.day) + ' day of the ' + enMonth;
+    return {
+      zh: zh,
+      en: en,
+      ganzhiZh: sex.yearCn + ' · ' + sex.monthCn + ' · ' + sex.dayCn,
+      ganzhiEn: sex.yearEn + ' · ' + sex.monthEn + ' · ' + sex.dayEn,
+      zhiZh: '十二直：' + sex.officerCn,
+      zhiEn: 'Twelve Day Officers: ' + sex.officerEn
+    };
+  }
+
+  function lunarDateText(date) {
+    var info = lunarCalendarText(date);
+    return isEN() ? info.en : info.zh;
   }
 
   function updateSunFromClock() {
@@ -584,14 +703,19 @@
     var astroPhase = document.getElementById('astroPhase');
     var astroMeta = document.getElementById('astroPhaseMeta');
     var lunarEl = document.getElementById('astroLunar');
+    var ganzhiEl = document.getElementById('astroGanzhi');
+    var zhiEl = document.getElementById('astroZhi');
     var astroDate = document.getElementById('astroDate');
     if (nameEl) nameEl.textContent = info.name;
     if (illumEl) illumEl.textContent = fmtNum(info.illum, 0) + '%';
     if (astroPhase) astroPhase.textContent = info.name;
     if (astroMeta) astroMeta.textContent = (isEN() ? 'Illumination ' : '照明 ') + fmtNum(info.illum, 0) + '% · ' +
       (isEN() ? 'moon age ' : '月龄 ') + fmtNum(info.phase * 29.530588853, 1) + (isEN() ? ' days' : ' 天') +
-      ' · ' + dateInputValue(date);
-    if (lunarEl) lunarEl.textContent = lunarDateText(date);
+      ' · ' + gregorianText(date);
+    var lunar = lunarCalendarText(date);
+    if (lunarEl) lunarEl.textContent = isEN() ? lunar.en : lunar.zh;
+    if (ganzhiEl) ganzhiEl.textContent = isEN() ? lunar.ganzhiEn : lunar.ganzhiZh;
+    if (zhiEl) zhiEl.textContent = isEN() ? lunar.zhiEn : lunar.zhiZh;
     if (astroDate && !astroDate.value) astroDate.value = dateInputValue(date);
   }
 

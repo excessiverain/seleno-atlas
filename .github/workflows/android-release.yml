@@ -18,7 +18,7 @@ jobs:
     name: Build WebView APK
     runs-on: ubuntu-latest
     env:
-      APK_NAME: SelenoAtlas-${{ github.ref_type == 'tag' && github.ref_name || 'v1.5.1' }}.apk
+      APK_NAME: SelenoAtlas-${{ github.ref_type == 'tag' && github.ref_name || 'v1.5.2' }}.apk
 
     steps:
       - name: Checkout
@@ -119,7 +119,8 @@ jobs:
             - 中英文月相名称；可按日期查看历史月相
             - 地名标签开关（独立一行「隐藏地名标签」）；一键隐藏/显示球面标签
             - 月食历史 2001–2035（NASA GSFC 公开目录，署名）
-            - 中国农历/夏历显示（WebView Intl Chinese calendar）
+            - 中国农历传统日序（初/十/廿）、干支年/月/日和十二直
+            - 英文农历/干支/十二直按英语习惯表述，日期使用 en-SG 风格（DD MMM YYYY）
             - 固定 release keystore 签名，后续版本可直接覆盖升级
             - APK 内置 MIT LICENSE、第三方声明和 AI 辅助声明（模型 `deepseek-v4.1-flash-1017`，关于页可打开）
             - 1,778 个 IAU 月球地名，243 个精选标注

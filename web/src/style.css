@@ -450,6 +450,7 @@ svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.65;strok
 .astro-phase{font-size:20px;font-weight:600;color:#eef3f9;margin:13px 0 4px}
 .astro-meta{font-size:9.5px;line-height:1.7;color:#718095}
 .astro-lunar{font-size:16px;color:#e6edf6;margin:7px 0 5px;letter-spacing:.02em}
+.astro-ganzhi{font-size:12px;color:#c6d2e1;margin:1px 0 4px;letter-spacing:.03em}
 .astro-eclipse-controls{display:flex;align-items:center;gap:10px;margin:5px 0 10px}
 .astro-eclipse-controls select{
   height:30px;border:1px solid var(--line);border-radius:7px;background:#0b111b;color:#c6d1df;
